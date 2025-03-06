@@ -4,7 +4,11 @@ import helmet from "helmet";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { authMiddleware } from "./middleware/authMiddleware";
+import userRoutes from "./routes/userRoutes";
+import agencyRoutes from "./routes/agencyRoutes";
+//import { authMiddleware } from "./middleware/authMiddleware";
+import invitationRoutes from "./routes/invitationRoutes";
+
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -23,10 +27,13 @@ app.use(cors());
 
 /* ROUTES */
 
-
 app.get("/", (req, res) => {
   res.send("This is the home route");
 });
+
+app.use("/users", userRoutes);
+app.use("/agencies", agencyRoutes);
+app.use("/invitations", invitationRoutes);
 
 /* SERVER */
 app.listen(PORT, () => {
