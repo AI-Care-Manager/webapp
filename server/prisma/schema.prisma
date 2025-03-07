@@ -14,6 +14,7 @@ model Invitation {
   email     String           @unique
   token     String           @unique
   role      Role
+  subRole   SubRole?
   expiresAt DateTime
   status    InvitationStatus @default(PENDING)
   createdAt DateTime         @default(now())
@@ -47,6 +48,22 @@ model Agency {
   documents       Document[]               @relation("AgencyDocuments")
   incidentReports IncidentReport[]
   medications     MedicationDatabaseLink[]
+  locations       Location[]
+}
+
+model Location {
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agencyId String
+  agency   Agency @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+
+  users   User[]
+  clients Client[]
 }
 
 model User {
@@ -56,6 +73,7 @@ model User {
   firstName       String
   lastName        String
   role            Role
+  subRole         SubRole?
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   sentInvitations Invitation[] @relation("SentInvitations")
@@ -63,6 +81,9 @@ model User {
   // Agency relationship
   agencyId String?
   agency   Agency? @relation(fields: [agencyId], references: [id], onDelete: SetNull)
+
+  // Location relationship
+  locations Location[]
 
   // User management
   invitedById  String?
@@ -122,6 +143,10 @@ model Client {
   allergies     String?
   interests     String?
   history       String?
+
+  // Location relationship
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id], onDelete: SetNull)
 
   // Related data
   keyContacts     KeyContact[]
@@ -316,11 +341,35 @@ model CareOutcome {
 
 enum Role {
   SOFTWARE_OWNER
-  ADMIN
-  HEALTH_WORKER
   OFFICE_STAFF
+  CARE_WORKER
   CLIENT
-  FAMILY
+}
+
+enum SubRole {
+  // Office staff subroles
+  FINANCE_MANAGER
+  HR_MANAGER
+  CARE_MANAGER
+  SCHEDULING_COORDINATOR
+  OFFICE_ADMINISTRATOR
+  RECEPTIONIST
+  QUALITY_ASSURANCE_MANAGER
+  MARKETING_COORDINATOR
+  COMPLIANCE_OFFICER
+  // Care worker subroles
+  CAREGIVER
+  SENIOR_CAREGIVER
+  JUNIOR_CAREGIVER
+  TRAINEE_CAREGIVER
+  LIVE_IN_CAREGIVER
+  PART_TIME_CAREGIVER
+  SPECIALIZED_CAREGIVER
+  NURSING_ASSISTANT
+  // Client subroles
+  SERVICE_USER
+  FAMILY_AND_FRIENDS
+  OTHER
 }
 
 enum ScheduleStatus {

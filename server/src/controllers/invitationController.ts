@@ -58,7 +58,7 @@ export const createInvitation = async (req: Request, res: Response): Promise<voi
     }
 
     // Verify inviter has permission to invite users
-    if (![Role.ADMIN, Role.SOFTWARE_OWNER].includes(inviter.role as any)) {
+    if (![Role.SOFTWARE_OWNER].includes(inviter.role as any)) {
         res.status(403).json({ error: "You do not have permission to invite users" });
         return;
     }
@@ -290,7 +290,7 @@ export const cancelInvitation = async (req: Request, res: Response): Promise<voi
             where: { id: userId },
         });
 
-        if (!user || ![Role.ADMIN, Role.SOFTWARE_OWNER].includes(user.role as any)) {
+        if (!user || ![Role.SOFTWARE_OWNER].includes(user.role as any)) {
             res.status(403).json({ error: 'You do not have permission to cancel invitations' });
             return;
         }

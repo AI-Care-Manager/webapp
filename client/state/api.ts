@@ -168,7 +168,12 @@ export const api = createApi({
       }),
       invalidatesTags: ["Invitations"],
     }),
-    
+
+    // Get locations
+    getLocationsByUserId: build.query<Location[], string>({
+      query: (userId) => `/locations/user/${userId}`,
+    }),
+
     // Accept invitation
     acceptInvitation: build.mutation<User, AcceptInvitationInput>({
       query: (data) => ({
@@ -190,4 +195,5 @@ export const {
   useGetInvitationsByEmailQuery,
   useAcceptInvitationMutation,
   useCreateUserMutation,
+  useGetLocationsByUserIdQuery,
 } = api;

@@ -24,6 +24,11 @@ export type Invitation = $Result.DefaultSelection<Prisma.$InvitationPayload>
  */
 export type Agency = $Result.DefaultSelection<Prisma.$AgencyPayload>
 /**
+ * Model Location
+ * 
+ */
+export type Location = $Result.DefaultSelection<Prisma.$LocationPayload>
+/**
  * Model User
  * 
  */
@@ -110,14 +115,38 @@ export type CareOutcome = $Result.DefaultSelection<Prisma.$CareOutcomePayload>
 export namespace $Enums {
   export const Role: {
   SOFTWARE_OWNER: 'SOFTWARE_OWNER',
-  ADMIN: 'ADMIN',
-  HEALTH_WORKER: 'HEALTH_WORKER',
   OFFICE_STAFF: 'OFFICE_STAFF',
-  CLIENT: 'CLIENT',
-  FAMILY: 'FAMILY'
+  CARE_WORKER: 'CARE_WORKER',
+  CLIENT: 'CLIENT'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const SubRole: {
+  FINANCE_MANAGER: 'FINANCE_MANAGER',
+  HR_MANAGER: 'HR_MANAGER',
+  CARE_MANAGER: 'CARE_MANAGER',
+  SCHEDULING_COORDINATOR: 'SCHEDULING_COORDINATOR',
+  OFFICE_ADMINISTRATOR: 'OFFICE_ADMINISTRATOR',
+  RECEPTIONIST: 'RECEPTIONIST',
+  QUALITY_ASSURANCE_MANAGER: 'QUALITY_ASSURANCE_MANAGER',
+  MARKETING_COORDINATOR: 'MARKETING_COORDINATOR',
+  COMPLIANCE_OFFICER: 'COMPLIANCE_OFFICER',
+  CAREGIVER: 'CAREGIVER',
+  SENIOR_CAREGIVER: 'SENIOR_CAREGIVER',
+  JUNIOR_CAREGIVER: 'JUNIOR_CAREGIVER',
+  TRAINEE_CAREGIVER: 'TRAINEE_CAREGIVER',
+  LIVE_IN_CAREGIVER: 'LIVE_IN_CAREGIVER',
+  PART_TIME_CAREGIVER: 'PART_TIME_CAREGIVER',
+  SPECIALIZED_CAREGIVER: 'SPECIALIZED_CAREGIVER',
+  NURSING_ASSISTANT: 'NURSING_ASSISTANT',
+  SERVICE_USER: 'SERVICE_USER',
+  FAMILY_AND_FRIENDS: 'FAMILY_AND_FRIENDS',
+  OTHER: 'OTHER'
+};
+
+export type SubRole = (typeof SubRole)[keyof typeof SubRole]
 
 
 export const ScheduleStatus: {
@@ -173,6 +202,10 @@ export type InvitationStatus = (typeof InvitationStatus)[keyof typeof Invitation
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type SubRole = $Enums.SubRole
+
+export const SubRole: typeof $Enums.SubRole
 
 export type ScheduleStatus = $Enums.ScheduleStatus
 
@@ -338,6 +371,16 @@ export class PrismaClient<
     * ```
     */
   get agency(): Prisma.AgencyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.location`: Exposes CRUD operations for the **Location** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Locations
+    * const locations = await prisma.location.findMany()
+    * ```
+    */
+  get location(): Prisma.LocationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -940,6 +983,7 @@ export namespace Prisma {
   export const ModelName: {
     Invitation: 'Invitation',
     Agency: 'Agency',
+    Location: 'Location',
     User: 'User',
     MedicationDatabaseLink: 'MedicationDatabaseLink',
     Client: 'Client',
@@ -971,7 +1015,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "invitation" | "agency" | "user" | "medicationDatabaseLink" | "client" | "clientCareAssignment" | "schedule" | "report" | "reportTask" | "medicationRecord" | "invoice" | "mileageRecord" | "document" | "profile" | "incidentReport" | "message" | "keyContact" | "careOutcome"
+      modelProps: "invitation" | "agency" | "location" | "user" | "medicationDatabaseLink" | "client" | "clientCareAssignment" | "schedule" | "report" | "reportTask" | "medicationRecord" | "invoice" | "mileageRecord" | "document" | "profile" | "incidentReport" | "message" | "keyContact" | "careOutcome"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1120,6 +1164,80 @@ export namespace Prisma {
           count: {
             args: Prisma.AgencyCountArgs<ExtArgs>
             result: $Utils.Optional<AgencyCountAggregateOutputType> | number
+          }
+        }
+      }
+      Location: {
+        payload: Prisma.$LocationPayload<ExtArgs>
+        fields: Prisma.LocationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LocationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LocationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          findFirst: {
+            args: Prisma.LocationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LocationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          findMany: {
+            args: Prisma.LocationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          create: {
+            args: Prisma.LocationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          createMany: {
+            args: Prisma.LocationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LocationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          delete: {
+            args: Prisma.LocationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          update: {
+            args: Prisma.LocationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          deleteMany: {
+            args: Prisma.LocationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LocationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LocationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          upsert: {
+            args: Prisma.LocationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          aggregate: {
+            args: Prisma.LocationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLocation>
+          }
+          groupBy: {
+            args: Prisma.LocationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LocationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LocationCountArgs<ExtArgs>
+            result: $Utils.Optional<LocationCountAggregateOutputType> | number
           }
         }
       }
@@ -2393,6 +2511,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     invitation?: InvitationOmit
     agency?: AgencyOmit
+    location?: LocationOmit
     user?: UserOmit
     medicationDatabaseLink?: MedicationDatabaseLinkOmit
     client?: ClientOmit
@@ -2511,6 +2630,7 @@ export namespace Prisma {
     documents: number
     incidentReports: number
     medications: number
+    locations: number
   }
 
   export type AgencyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2522,6 +2642,7 @@ export namespace Prisma {
     documents?: boolean | AgencyCountOutputTypeCountDocumentsArgs
     incidentReports?: boolean | AgencyCountOutputTypeCountIncidentReportsArgs
     medications?: boolean | AgencyCountOutputTypeCountMedicationsArgs
+    locations?: boolean | AgencyCountOutputTypeCountLocationsArgs
   }
 
   // Custom InputTypes
@@ -2591,6 +2712,53 @@ export namespace Prisma {
     where?: MedicationDatabaseLinkWhereInput
   }
 
+  /**
+   * AgencyCountOutputType without action
+   */
+  export type AgencyCountOutputTypeCountLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationWhereInput
+  }
+
+
+  /**
+   * Count Type LocationCountOutputType
+   */
+
+  export type LocationCountOutputType = {
+    users: number
+    clients: number
+  }
+
+  export type LocationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | LocationCountOutputTypeCountUsersArgs
+    clients?: boolean | LocationCountOutputTypeCountClientsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationCountOutputType
+     */
+    select?: LocationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountClientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClientWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -2598,6 +2766,7 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     sentInvitations: number
+    locations: number
     invitedUsers: number
     careAssignments: number
     schedules: number
@@ -2612,6 +2781,7 @@ export namespace Prisma {
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sentInvitations?: boolean | UserCountOutputTypeCountSentInvitationsArgs
+    locations?: boolean | UserCountOutputTypeCountLocationsArgs
     invitedUsers?: boolean | UserCountOutputTypeCountInvitedUsersArgs
     careAssignments?: boolean | UserCountOutputTypeCountCareAssignmentsArgs
     schedules?: boolean | UserCountOutputTypeCountSchedulesArgs
@@ -2640,6 +2810,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSentInvitationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InvitationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationWhereInput
   }
 
   /**
@@ -2866,6 +3043,7 @@ export namespace Prisma {
     email: string | null
     token: string | null
     role: $Enums.Role | null
+    subRole: $Enums.SubRole | null
     expiresAt: Date | null
     status: $Enums.InvitationStatus | null
     createdAt: Date | null
@@ -2877,6 +3055,7 @@ export namespace Prisma {
     email: string | null
     token: string | null
     role: $Enums.Role | null
+    subRole: $Enums.SubRole | null
     expiresAt: Date | null
     status: $Enums.InvitationStatus | null
     createdAt: Date | null
@@ -2888,6 +3067,7 @@ export namespace Prisma {
     email: number
     token: number
     role: number
+    subRole: number
     expiresAt: number
     status: number
     createdAt: number
@@ -2901,6 +3081,7 @@ export namespace Prisma {
     email?: true
     token?: true
     role?: true
+    subRole?: true
     expiresAt?: true
     status?: true
     createdAt?: true
@@ -2912,6 +3093,7 @@ export namespace Prisma {
     email?: true
     token?: true
     role?: true
+    subRole?: true
     expiresAt?: true
     status?: true
     createdAt?: true
@@ -2923,6 +3105,7 @@ export namespace Prisma {
     email?: true
     token?: true
     role?: true
+    subRole?: true
     expiresAt?: true
     status?: true
     createdAt?: true
@@ -3007,6 +3190,7 @@ export namespace Prisma {
     email: string
     token: string
     role: $Enums.Role
+    subRole: $Enums.SubRole | null
     expiresAt: Date
     status: $Enums.InvitationStatus
     createdAt: Date
@@ -3035,6 +3219,7 @@ export namespace Prisma {
     email?: boolean
     token?: boolean
     role?: boolean
+    subRole?: boolean
     expiresAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3047,6 +3232,7 @@ export namespace Prisma {
     email?: boolean
     token?: boolean
     role?: boolean
+    subRole?: boolean
     expiresAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3059,6 +3245,7 @@ export namespace Prisma {
     email?: boolean
     token?: boolean
     role?: boolean
+    subRole?: boolean
     expiresAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -3071,13 +3258,14 @@ export namespace Prisma {
     email?: boolean
     token?: boolean
     role?: boolean
+    subRole?: boolean
     expiresAt?: boolean
     status?: boolean
     createdAt?: boolean
     inviterId?: boolean
   }
 
-  export type InvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "token" | "role" | "expiresAt" | "status" | "createdAt" | "inviterId", ExtArgs["result"]["invitation"]>
+  export type InvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "token" | "role" | "subRole" | "expiresAt" | "status" | "createdAt" | "inviterId", ExtArgs["result"]["invitation"]>
   export type InvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     inviter?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -3098,6 +3286,7 @@ export namespace Prisma {
       email: string
       token: string
       role: $Enums.Role
+      subRole: $Enums.SubRole | null
       expiresAt: Date
       status: $Enums.InvitationStatus
       createdAt: Date
@@ -3530,6 +3719,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Invitation", 'String'>
     readonly token: FieldRef<"Invitation", 'String'>
     readonly role: FieldRef<"Invitation", 'Role'>
+    readonly subRole: FieldRef<"Invitation", 'SubRole'>
     readonly expiresAt: FieldRef<"Invitation", 'DateTime'>
     readonly status: FieldRef<"Invitation", 'InvitationStatus'>
     readonly createdAt: FieldRef<"Invitation", 'DateTime'>
@@ -4176,6 +4366,7 @@ export namespace Prisma {
     documents?: boolean | Agency$documentsArgs<ExtArgs>
     incidentReports?: boolean | Agency$incidentReportsArgs<ExtArgs>
     medications?: boolean | Agency$medicationsArgs<ExtArgs>
+    locations?: boolean | Agency$locationsArgs<ExtArgs>
     _count?: boolean | AgencyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["agency"]>
 
@@ -4234,6 +4425,7 @@ export namespace Prisma {
     documents?: boolean | Agency$documentsArgs<ExtArgs>
     incidentReports?: boolean | Agency$incidentReportsArgs<ExtArgs>
     medications?: boolean | Agency$medicationsArgs<ExtArgs>
+    locations?: boolean | Agency$locationsArgs<ExtArgs>
     _count?: boolean | AgencyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AgencyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4250,6 +4442,7 @@ export namespace Prisma {
       documents: Prisma.$DocumentPayload<ExtArgs>[]
       incidentReports: Prisma.$IncidentReportPayload<ExtArgs>[]
       medications: Prisma.$MedicationDatabaseLinkPayload<ExtArgs>[]
+      locations: Prisma.$LocationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4666,6 +4859,7 @@ export namespace Prisma {
     documents<T extends Agency$documentsArgs<ExtArgs> = {}>(args?: Subset<T, Agency$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     incidentReports<T extends Agency$incidentReportsArgs<ExtArgs> = {}>(args?: Subset<T, Agency$incidentReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncidentReportPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     medications<T extends Agency$medicationsArgs<ExtArgs> = {}>(args?: Subset<T, Agency$medicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MedicationDatabaseLinkPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    locations<T extends Agency$locationsArgs<ExtArgs> = {}>(args?: Subset<T, Agency$locationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5287,6 +5481,30 @@ export namespace Prisma {
   }
 
   /**
+   * Agency.locations
+   */
+  export type Agency$locationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    cursor?: LocationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
    * Agency without action
    */
   export type AgencyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5302,6 +5520,1148 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: AgencyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Location
+   */
+
+  export type AggregateLocation = {
+    _count: LocationCountAggregateOutputType | null
+    _min: LocationMinAggregateOutputType | null
+    _max: LocationMaxAggregateOutputType | null
+  }
+
+  export type LocationMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    address: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    agencyId: string | null
+  }
+
+  export type LocationMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    address: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    agencyId: string | null
+  }
+
+  export type LocationCountAggregateOutputType = {
+    id: number
+    name: number
+    address: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    agencyId: number
+    _all: number
+  }
+
+
+  export type LocationMinAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    agencyId?: true
+  }
+
+  export type LocationMaxAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    agencyId?: true
+  }
+
+  export type LocationCountAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    agencyId?: true
+    _all?: true
+  }
+
+  export type LocationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Location to aggregate.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Locations
+    **/
+    _count?: true | LocationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LocationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LocationMaxAggregateInputType
+  }
+
+  export type GetLocationAggregateType<T extends LocationAggregateArgs> = {
+        [P in keyof T & keyof AggregateLocation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLocation[P]>
+      : GetScalarType<T[P], AggregateLocation[P]>
+  }
+
+
+
+
+  export type LocationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LocationWhereInput
+    orderBy?: LocationOrderByWithAggregationInput | LocationOrderByWithAggregationInput[]
+    by: LocationScalarFieldEnum[] | LocationScalarFieldEnum
+    having?: LocationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LocationCountAggregateInputType | true
+    _min?: LocationMinAggregateInputType
+    _max?: LocationMaxAggregateInputType
+  }
+
+  export type LocationGroupByOutputType = {
+    id: string
+    name: string
+    address: string | null
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    agencyId: string
+    _count: LocationCountAggregateOutputType | null
+    _min: LocationMinAggregateOutputType | null
+    _max: LocationMaxAggregateOutputType | null
+  }
+
+  type GetLocationGroupByPayload<T extends LocationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LocationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LocationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LocationGroupByOutputType[P]>
+            : GetScalarType<T[P], LocationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LocationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    agencyId?: boolean
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+    users?: boolean | Location$usersArgs<ExtArgs>
+    clients?: boolean | Location$clientsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    agencyId?: boolean
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    agencyId?: boolean
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["location"]>
+
+  export type LocationSelectScalar = {
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    agencyId?: boolean
+  }
+
+  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "isActive" | "createdAt" | "updatedAt" | "agencyId", ExtArgs["result"]["location"]>
+  export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+    users?: boolean | Location$usersArgs<ExtArgs>
+    clients?: boolean | Location$clientsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LocationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+  }
+  export type LocationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    agency?: boolean | AgencyDefaultArgs<ExtArgs>
+  }
+
+  export type $LocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Location"
+    objects: {
+      agency: Prisma.$AgencyPayload<ExtArgs>
+      users: Prisma.$UserPayload<ExtArgs>[]
+      clients: Prisma.$ClientPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      address: string | null
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+      agencyId: string
+    }, ExtArgs["result"]["location"]>
+    composites: {}
+  }
+
+  type LocationGetPayload<S extends boolean | null | undefined | LocationDefaultArgs> = $Result.GetResult<Prisma.$LocationPayload, S>
+
+  type LocationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LocationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LocationCountAggregateInputType | true
+    }
+
+  export interface LocationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Location'], meta: { name: 'Location' } }
+    /**
+     * Find zero or one Location that matches the filter.
+     * @param {LocationFindUniqueArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LocationFindUniqueArgs>(args: SelectSubset<T, LocationFindUniqueArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Location that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LocationFindUniqueOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LocationFindUniqueOrThrowArgs>(args: SelectSubset<T, LocationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Location that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LocationFindFirstArgs>(args?: SelectSubset<T, LocationFindFirstArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Location that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindFirstOrThrowArgs} args - Arguments to find a Location
+     * @example
+     * // Get one Location
+     * const location = await prisma.location.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LocationFindFirstOrThrowArgs>(args?: SelectSubset<T, LocationFindFirstOrThrowArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Locations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Locations
+     * const locations = await prisma.location.findMany()
+     * 
+     * // Get first 10 Locations
+     * const locations = await prisma.location.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const locationWithIdOnly = await prisma.location.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LocationFindManyArgs>(args?: SelectSubset<T, LocationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Location.
+     * @param {LocationCreateArgs} args - Arguments to create a Location.
+     * @example
+     * // Create one Location
+     * const Location = await prisma.location.create({
+     *   data: {
+     *     // ... data to create a Location
+     *   }
+     * })
+     * 
+     */
+    create<T extends LocationCreateArgs>(args: SelectSubset<T, LocationCreateArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Locations.
+     * @param {LocationCreateManyArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LocationCreateManyArgs>(args?: SelectSubset<T, LocationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Locations and returns the data saved in the database.
+     * @param {LocationCreateManyAndReturnArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LocationCreateManyAndReturnArgs>(args?: SelectSubset<T, LocationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Location.
+     * @param {LocationDeleteArgs} args - Arguments to delete one Location.
+     * @example
+     * // Delete one Location
+     * const Location = await prisma.location.delete({
+     *   where: {
+     *     // ... filter to delete one Location
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LocationDeleteArgs>(args: SelectSubset<T, LocationDeleteArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Location.
+     * @param {LocationUpdateArgs} args - Arguments to update one Location.
+     * @example
+     * // Update one Location
+     * const location = await prisma.location.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LocationUpdateArgs>(args: SelectSubset<T, LocationUpdateArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Locations.
+     * @param {LocationDeleteManyArgs} args - Arguments to filter Locations to delete.
+     * @example
+     * // Delete a few Locations
+     * const { count } = await prisma.location.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LocationDeleteManyArgs>(args?: SelectSubset<T, LocationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Locations
+     * const location = await prisma.location.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LocationUpdateManyArgs>(args: SelectSubset<T, LocationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Locations and returns the data updated in the database.
+     * @param {LocationUpdateManyAndReturnArgs} args - Arguments to update many Locations.
+     * @example
+     * // Update many Locations
+     * const location = await prisma.location.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LocationUpdateManyAndReturnArgs>(args: SelectSubset<T, LocationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Location.
+     * @param {LocationUpsertArgs} args - Arguments to update or create a Location.
+     * @example
+     * // Update or create a Location
+     * const location = await prisma.location.upsert({
+     *   create: {
+     *     // ... data to create a Location
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Location we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LocationUpsertArgs>(args: SelectSubset<T, LocationUpsertArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Locations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationCountArgs} args - Arguments to filter Locations to count.
+     * @example
+     * // Count the number of Locations
+     * const count = await prisma.location.count({
+     *   where: {
+     *     // ... the filter for the Locations we want to count
+     *   }
+     * })
+    **/
+    count<T extends LocationCountArgs>(
+      args?: Subset<T, LocationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LocationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LocationAggregateArgs>(args: Subset<T, LocationAggregateArgs>): Prisma.PrismaPromise<GetLocationAggregateType<T>>
+
+    /**
+     * Group by Location.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LocationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LocationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LocationGroupByArgs['orderBy'] }
+        : { orderBy?: LocationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LocationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLocationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Location model
+   */
+  readonly fields: LocationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Location.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LocationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    agency<T extends AgencyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AgencyDefaultArgs<ExtArgs>>): Prisma__AgencyClient<$Result.GetResult<Prisma.$AgencyPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    users<T extends Location$usersArgs<ExtArgs> = {}>(args?: Subset<T, Location$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    clients<T extends Location$clientsArgs<ExtArgs> = {}>(args?: Subset<T, Location$clientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Location model
+   */ 
+  interface LocationFieldRefs {
+    readonly id: FieldRef<"Location", 'String'>
+    readonly name: FieldRef<"Location", 'String'>
+    readonly address: FieldRef<"Location", 'String'>
+    readonly isActive: FieldRef<"Location", 'Boolean'>
+    readonly createdAt: FieldRef<"Location", 'DateTime'>
+    readonly updatedAt: FieldRef<"Location", 'DateTime'>
+    readonly agencyId: FieldRef<"Location", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Location findUnique
+   */
+  export type LocationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location findUniqueOrThrow
+   */
+  export type LocationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location findFirst
+   */
+  export type LocationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location findFirstOrThrow
+   */
+  export type LocationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Location to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Locations.
+     */
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location findMany
+   */
+  export type LocationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter, which Locations to fetch.
+     */
+    where?: LocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Locations to fetch.
+     */
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Locations.
+     */
+    cursor?: LocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Locations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Locations.
+     */
+    skip?: number
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
+  }
+
+  /**
+   * Location create
+   */
+  export type LocationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Location.
+     */
+    data: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+  }
+
+  /**
+   * Location createMany
+   */
+  export type LocationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Location createManyAndReturn
+   */
+  export type LocationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Location update
+   */
+  export type LocationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Location.
+     */
+    data: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>
+    /**
+     * Choose, which Location to update.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location updateMany
+   */
+  export type LocationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Locations.
+     */
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyInput>
+    /**
+     * Filter which Locations to update
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Location updateManyAndReturn
+   */
+  export type LocationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * The data used to update Locations.
+     */
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyInput>
+    /**
+     * Filter which Locations to update
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Location upsert
+   */
+  export type LocationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Location to update in case it exists.
+     */
+    where: LocationWhereUniqueInput
+    /**
+     * In case the Location found by the `where` argument doesn't exist, create a new Location with this data.
+     */
+    create: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+    /**
+     * In case the Location was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>
+  }
+
+  /**
+   * Location delete
+   */
+  export type LocationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * Filter which Location to delete.
+     */
+    where: LocationWhereUniqueInput
+  }
+
+  /**
+   * Location deleteMany
+   */
+  export type LocationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Locations to delete
+     */
+    where?: LocationWhereInput
+    /**
+     * Limit how many Locations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Location.users
+   */
+  export type Location$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Location.clients
+   */
+  export type Location$clientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    where?: ClientWhereInput
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    cursor?: ClientWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+  }
+
+  /**
+   * Location without action
+   */
+  export type LocationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
   }
 
 
@@ -5322,6 +6682,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     role: $Enums.Role | null
+    subRole: $Enums.SubRole | null
     createdAt: Date | null
     updatedAt: Date | null
     agencyId: string | null
@@ -5335,6 +6696,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     role: $Enums.Role | null
+    subRole: $Enums.SubRole | null
     createdAt: Date | null
     updatedAt: Date | null
     agencyId: string | null
@@ -5348,6 +6710,7 @@ export namespace Prisma {
     firstName: number
     lastName: number
     role: number
+    subRole: number
     createdAt: number
     updatedAt: number
     agencyId: number
@@ -5363,6 +6726,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     role?: true
+    subRole?: true
     createdAt?: true
     updatedAt?: true
     agencyId?: true
@@ -5376,6 +6740,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     role?: true
+    subRole?: true
     createdAt?: true
     updatedAt?: true
     agencyId?: true
@@ -5389,6 +6754,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     role?: true
+    subRole?: true
     createdAt?: true
     updatedAt?: true
     agencyId?: true
@@ -5475,6 +6841,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole: $Enums.SubRole | null
     createdAt: Date
     updatedAt: Date
     agencyId: string | null
@@ -5505,12 +6872,14 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     role?: boolean
+    subRole?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     agencyId?: boolean
     invitedById?: boolean
     sentInvitations?: boolean | User$sentInvitationsArgs<ExtArgs>
     agency?: boolean | User$agencyArgs<ExtArgs>
+    locations?: boolean | User$locationsArgs<ExtArgs>
     invitedBy?: boolean | User$invitedByArgs<ExtArgs>
     invitedUsers?: boolean | User$invitedUsersArgs<ExtArgs>
     careAssignments?: boolean | User$careAssignmentsArgs<ExtArgs>
@@ -5533,6 +6902,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     role?: boolean
+    subRole?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     agencyId?: boolean
@@ -5548,6 +6918,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     role?: boolean
+    subRole?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     agencyId?: boolean
@@ -5563,16 +6934,18 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     role?: boolean
+    subRole?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     agencyId?: boolean
     invitedById?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "email" | "firstName" | "lastName" | "role" | "createdAt" | "updatedAt" | "agencyId" | "invitedById", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cognitoId" | "email" | "firstName" | "lastName" | "role" | "subRole" | "createdAt" | "updatedAt" | "agencyId" | "invitedById", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sentInvitations?: boolean | User$sentInvitationsArgs<ExtArgs>
     agency?: boolean | User$agencyArgs<ExtArgs>
+    locations?: boolean | User$locationsArgs<ExtArgs>
     invitedBy?: boolean | User$invitedByArgs<ExtArgs>
     invitedUsers?: boolean | User$invitedUsersArgs<ExtArgs>
     careAssignments?: boolean | User$careAssignmentsArgs<ExtArgs>
@@ -5601,6 +6974,7 @@ export namespace Prisma {
     objects: {
       sentInvitations: Prisma.$InvitationPayload<ExtArgs>[]
       agency: Prisma.$AgencyPayload<ExtArgs> | null
+      locations: Prisma.$LocationPayload<ExtArgs>[]
       invitedBy: Prisma.$UserPayload<ExtArgs> | null
       invitedUsers: Prisma.$UserPayload<ExtArgs>[]
       careAssignments: Prisma.$ClientCareAssignmentPayload<ExtArgs>[]
@@ -5621,6 +6995,7 @@ export namespace Prisma {
       firstName: string
       lastName: string
       role: $Enums.Role
+      subRole: $Enums.SubRole | null
       createdAt: Date
       updatedAt: Date
       agencyId: string | null
@@ -6021,6 +7396,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sentInvitations<T extends User$sentInvitationsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     agency<T extends User$agencyArgs<ExtArgs> = {}>(args?: Subset<T, User$agencyArgs<ExtArgs>>): Prisma__AgencyClient<$Result.GetResult<Prisma.$AgencyPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    locations<T extends User$locationsArgs<ExtArgs> = {}>(args?: Subset<T, User$locationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     invitedBy<T extends User$invitedByArgs<ExtArgs> = {}>(args?: Subset<T, User$invitedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     invitedUsers<T extends User$invitedUsersArgs<ExtArgs> = {}>(args?: Subset<T, User$invitedUsersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     careAssignments<T extends User$careAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$careAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientCareAssignmentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -6068,6 +7444,7 @@ export namespace Prisma {
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
+    readonly subRole: FieldRef<"User", 'SubRole'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly agencyId: FieldRef<"User", 'String'>
@@ -6508,6 +7885,30 @@ export namespace Prisma {
      */
     include?: AgencyInclude<ExtArgs> | null
     where?: AgencyWhereInput
+  }
+
+  /**
+   * User.locations
+   */
+  export type User$locationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
+    orderBy?: LocationOrderByWithRelationInput | LocationOrderByWithRelationInput[]
+    cursor?: LocationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LocationScalarFieldEnum | LocationScalarFieldEnum[]
   }
 
   /**
@@ -7911,6 +9312,7 @@ export namespace Prisma {
     allergies: string | null
     interests: string | null
     history: string | null
+    locationId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7938,6 +9340,7 @@ export namespace Prisma {
     allergies: string | null
     interests: string | null
     history: string | null
+    locationId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -7965,6 +9368,7 @@ export namespace Prisma {
     allergies: number
     interests: number
     history: number
+    locationId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -7994,6 +9398,7 @@ export namespace Prisma {
     allergies?: true
     interests?: true
     history?: true
+    locationId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8021,6 +9426,7 @@ export namespace Prisma {
     allergies?: true
     interests?: true
     history?: true
+    locationId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8048,6 +9454,7 @@ export namespace Prisma {
     allergies?: true
     interests?: true
     history?: true
+    locationId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8148,6 +9555,7 @@ export namespace Prisma {
     allergies: string | null
     interests: string | null
     history: string | null
+    locationId: string | null
     createdAt: Date
     updatedAt: Date
     _count: ClientCountAggregateOutputType | null
@@ -8192,8 +9600,10 @@ export namespace Prisma {
     allergies?: boolean
     interests?: boolean
     history?: boolean
+    locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | Client$locationArgs<ExtArgs>
     keyContacts?: boolean | Client$keyContactsArgs<ExtArgs>
     careOutcomes?: boolean | Client$careOutcomesArgs<ExtArgs>
     careAssignments?: boolean | Client$careAssignmentsArgs<ExtArgs>
@@ -8230,8 +9640,10 @@ export namespace Prisma {
     allergies?: boolean
     interests?: boolean
     history?: boolean
+    locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | Client$locationArgs<ExtArgs>
     agency?: boolean | AgencyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
@@ -8258,8 +9670,10 @@ export namespace Prisma {
     allergies?: boolean
     interests?: boolean
     history?: boolean
+    locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    location?: boolean | Client$locationArgs<ExtArgs>
     agency?: boolean | AgencyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
@@ -8286,12 +9700,14 @@ export namespace Prisma {
     allergies?: boolean
     interests?: boolean
     history?: boolean
+    locationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "agencyId" | "title" | "firstName" | "lastName" | "clientId" | "addressLine1" | "addressLine2" | "townOrCity" | "county" | "postalCode" | "propertyAccess" | "phoneNumber" | "nhsNumber" | "dnraOrder" | "mobility" | "likesDislikes" | "dateOfBirth" | "languages" | "allergies" | "interests" | "history" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "agencyId" | "title" | "firstName" | "lastName" | "clientId" | "addressLine1" | "addressLine2" | "townOrCity" | "county" | "postalCode" | "propertyAccess" | "phoneNumber" | "nhsNumber" | "dnraOrder" | "mobility" | "likesDislikes" | "dateOfBirth" | "languages" | "allergies" | "interests" | "history" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
   export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | Client$locationArgs<ExtArgs>
     keyContacts?: boolean | Client$keyContactsArgs<ExtArgs>
     careOutcomes?: boolean | Client$careOutcomesArgs<ExtArgs>
     careAssignments?: boolean | Client$careAssignmentsArgs<ExtArgs>
@@ -8305,15 +9721,18 @@ export namespace Prisma {
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | Client$locationArgs<ExtArgs>
     agency?: boolean | AgencyDefaultArgs<ExtArgs>
   }
   export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | Client$locationArgs<ExtArgs>
     agency?: boolean | AgencyDefaultArgs<ExtArgs>
   }
 
   export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Client"
     objects: {
+      location: Prisma.$LocationPayload<ExtArgs> | null
       keyContacts: Prisma.$KeyContactPayload<ExtArgs>[]
       careOutcomes: Prisma.$CareOutcomePayload<ExtArgs>[]
       careAssignments: Prisma.$ClientCareAssignmentPayload<ExtArgs>[]
@@ -8348,6 +9767,7 @@ export namespace Prisma {
       allergies: string | null
       interests: string | null
       history: string | null
+      locationId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["client"]>
@@ -8744,6 +10164,7 @@ export namespace Prisma {
    */
   export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    location<T extends Client$locationArgs<ExtArgs> = {}>(args?: Subset<T, Client$locationArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     keyContacts<T extends Client$keyContactsArgs<ExtArgs> = {}>(args?: Subset<T, Client$keyContactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KeyContactPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     careOutcomes<T extends Client$careOutcomesArgs<ExtArgs> = {}>(args?: Subset<T, Client$careOutcomesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CareOutcomePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     careAssignments<T extends Client$careAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Client$careAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientCareAssignmentPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -8805,6 +10226,7 @@ export namespace Prisma {
     readonly allergies: FieldRef<"Client", 'String'>
     readonly interests: FieldRef<"Client", 'String'>
     readonly history: FieldRef<"Client", 'String'>
+    readonly locationId: FieldRef<"Client", 'String'>
     readonly createdAt: FieldRef<"Client", 'DateTime'>
     readonly updatedAt: FieldRef<"Client", 'DateTime'>
   }
@@ -9200,6 +10622,25 @@ export namespace Prisma {
      * Limit how many Clients to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Client.location
+   */
+  export type Client$locationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    where?: LocationWhereInput
   }
 
   /**
@@ -23752,6 +25193,7 @@ export namespace Prisma {
     email: 'email',
     token: 'token',
     role: 'role',
+    subRole: 'subRole',
     expiresAt: 'expiresAt',
     status: 'status',
     createdAt: 'createdAt',
@@ -23779,6 +25221,19 @@ export namespace Prisma {
   export type AgencyScalarFieldEnum = (typeof AgencyScalarFieldEnum)[keyof typeof AgencyScalarFieldEnum]
 
 
+  export const LocationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    address: 'address',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    agencyId: 'agencyId'
+  };
+
+  export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     cognitoId: 'cognitoId',
@@ -23786,6 +25241,7 @@ export namespace Prisma {
     firstName: 'firstName',
     lastName: 'lastName',
     role: 'role',
+    subRole: 'subRole',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     agencyId: 'agencyId',
@@ -23830,6 +25286,7 @@ export namespace Prisma {
     allergies: 'allergies',
     interests: 'interests',
     history: 'history',
+    locationId: 'locationId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -24056,6 +25513,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'SubRole'
+   */
+  export type EnumSubRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubRole[]'
+   */
+  export type ListEnumSubRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -24185,6 +25656,7 @@ export namespace Prisma {
     email?: StringFilter<"Invitation"> | string
     token?: StringFilter<"Invitation"> | string
     role?: EnumRoleFilter<"Invitation"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"Invitation"> | $Enums.SubRole | null
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
     status?: EnumInvitationStatusFilter<"Invitation"> | $Enums.InvitationStatus
     createdAt?: DateTimeFilter<"Invitation"> | Date | string
@@ -24197,6 +25669,7 @@ export namespace Prisma {
     email?: SortOrder
     token?: SortOrder
     role?: SortOrder
+    subRole?: SortOrderInput | SortOrder
     expiresAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -24212,6 +25685,7 @@ export namespace Prisma {
     OR?: InvitationWhereInput[]
     NOT?: InvitationWhereInput | InvitationWhereInput[]
     role?: EnumRoleFilter<"Invitation"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"Invitation"> | $Enums.SubRole | null
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
     status?: EnumInvitationStatusFilter<"Invitation"> | $Enums.InvitationStatus
     createdAt?: DateTimeFilter<"Invitation"> | Date | string
@@ -24224,6 +25698,7 @@ export namespace Prisma {
     email?: SortOrder
     token?: SortOrder
     role?: SortOrder
+    subRole?: SortOrderInput | SortOrder
     expiresAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -24241,6 +25716,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Invitation"> | string
     token?: StringWithAggregatesFilter<"Invitation"> | string
     role?: EnumRoleWithAggregatesFilter<"Invitation"> | $Enums.Role
+    subRole?: EnumSubRoleNullableWithAggregatesFilter<"Invitation"> | $Enums.SubRole | null
     expiresAt?: DateTimeWithAggregatesFilter<"Invitation"> | Date | string
     status?: EnumInvitationStatusWithAggregatesFilter<"Invitation"> | $Enums.InvitationStatus
     createdAt?: DateTimeWithAggregatesFilter<"Invitation"> | Date | string
@@ -24271,6 +25747,7 @@ export namespace Prisma {
     documents?: DocumentListRelationFilter
     incidentReports?: IncidentReportListRelationFilter
     medications?: MedicationDatabaseLinkListRelationFilter
+    locations?: LocationListRelationFilter
   }
 
   export type AgencyOrderByWithRelationInput = {
@@ -24294,6 +25771,7 @@ export namespace Prisma {
     documents?: DocumentOrderByRelationAggregateInput
     incidentReports?: IncidentReportOrderByRelationAggregateInput
     medications?: MedicationDatabaseLinkOrderByRelationAggregateInput
+    locations?: LocationOrderByRelationAggregateInput
   }
 
   export type AgencyWhereUniqueInput = Prisma.AtLeast<{
@@ -24320,6 +25798,7 @@ export namespace Prisma {
     documents?: DocumentListRelationFilter
     incidentReports?: IncidentReportListRelationFilter
     medications?: MedicationDatabaseLinkListRelationFilter
+    locations?: LocationListRelationFilter
   }, "id">
 
   export type AgencyOrderByWithAggregationInput = {
@@ -24358,6 +25837,77 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Agency"> | Date | string
   }
 
+  export type LocationWhereInput = {
+    AND?: LocationWhereInput | LocationWhereInput[]
+    OR?: LocationWhereInput[]
+    NOT?: LocationWhereInput | LocationWhereInput[]
+    id?: StringFilter<"Location"> | string
+    name?: StringFilter<"Location"> | string
+    address?: StringNullableFilter<"Location"> | string | null
+    isActive?: BoolFilter<"Location"> | boolean
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+    agencyId?: StringFilter<"Location"> | string
+    agency?: XOR<AgencyScalarRelationFilter, AgencyWhereInput>
+    users?: UserListRelationFilter
+    clients?: ClientListRelationFilter
+  }
+
+  export type LocationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    agencyId?: SortOrder
+    agency?: AgencyOrderByWithRelationInput
+    users?: UserOrderByRelationAggregateInput
+    clients?: ClientOrderByRelationAggregateInput
+  }
+
+  export type LocationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: LocationWhereInput | LocationWhereInput[]
+    OR?: LocationWhereInput[]
+    NOT?: LocationWhereInput | LocationWhereInput[]
+    name?: StringFilter<"Location"> | string
+    address?: StringNullableFilter<"Location"> | string | null
+    isActive?: BoolFilter<"Location"> | boolean
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+    agencyId?: StringFilter<"Location"> | string
+    agency?: XOR<AgencyScalarRelationFilter, AgencyWhereInput>
+    users?: UserListRelationFilter
+    clients?: ClientListRelationFilter
+  }, "id">
+
+  export type LocationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    agencyId?: SortOrder
+    _count?: LocationCountOrderByAggregateInput
+    _max?: LocationMaxOrderByAggregateInput
+    _min?: LocationMinOrderByAggregateInput
+  }
+
+  export type LocationScalarWhereWithAggregatesInput = {
+    AND?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
+    OR?: LocationScalarWhereWithAggregatesInput[]
+    NOT?: LocationScalarWhereWithAggregatesInput | LocationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Location"> | string
+    name?: StringWithAggregatesFilter<"Location"> | string
+    address?: StringNullableWithAggregatesFilter<"Location"> | string | null
+    isActive?: BoolWithAggregatesFilter<"Location"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Location"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Location"> | Date | string
+    agencyId?: StringWithAggregatesFilter<"Location"> | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -24368,12 +25918,14 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"User"> | $Enums.SubRole | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     agencyId?: StringNullableFilter<"User"> | string | null
     invitedById?: StringNullableFilter<"User"> | string | null
     sentInvitations?: InvitationListRelationFilter
     agency?: XOR<AgencyNullableScalarRelationFilter, AgencyWhereInput> | null
+    locations?: LocationListRelationFilter
     invitedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     invitedUsers?: UserListRelationFilter
     careAssignments?: ClientCareAssignmentListRelationFilter
@@ -24395,12 +25947,14 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     role?: SortOrder
+    subRole?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     agencyId?: SortOrderInput | SortOrder
     invitedById?: SortOrderInput | SortOrder
     sentInvitations?: InvitationOrderByRelationAggregateInput
     agency?: AgencyOrderByWithRelationInput
+    locations?: LocationOrderByRelationAggregateInput
     invitedBy?: UserOrderByWithRelationInput
     invitedUsers?: UserOrderByRelationAggregateInput
     careAssignments?: ClientCareAssignmentOrderByRelationAggregateInput
@@ -24425,12 +25979,14 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"User"> | $Enums.SubRole | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     agencyId?: StringNullableFilter<"User"> | string | null
     invitedById?: StringNullableFilter<"User"> | string | null
     sentInvitations?: InvitationListRelationFilter
     agency?: XOR<AgencyNullableScalarRelationFilter, AgencyWhereInput> | null
+    locations?: LocationListRelationFilter
     invitedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     invitedUsers?: UserListRelationFilter
     careAssignments?: ClientCareAssignmentListRelationFilter
@@ -24452,6 +26008,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     role?: SortOrder
+    subRole?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     agencyId?: SortOrderInput | SortOrder
@@ -24471,6 +26028,7 @@ export namespace Prisma {
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    subRole?: EnumSubRoleNullableWithAggregatesFilter<"User"> | $Enums.SubRole | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     agencyId?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -24563,8 +26121,10 @@ export namespace Prisma {
     allergies?: StringNullableFilter<"Client"> | string | null
     interests?: StringNullableFilter<"Client"> | string | null
     history?: StringNullableFilter<"Client"> | string | null
+    locationId?: StringNullableFilter<"Client"> | string | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
     keyContacts?: KeyContactListRelationFilter
     careOutcomes?: CareOutcomeListRelationFilter
     careAssignments?: ClientCareAssignmentListRelationFilter
@@ -24600,8 +26160,10 @@ export namespace Prisma {
     allergies?: SortOrderInput | SortOrder
     interests?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
+    locationId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    location?: LocationOrderByWithRelationInput
     keyContacts?: KeyContactOrderByRelationAggregateInput
     careOutcomes?: CareOutcomeOrderByRelationAggregateInput
     careAssignments?: ClientCareAssignmentOrderByRelationAggregateInput
@@ -24640,8 +26202,10 @@ export namespace Prisma {
     allergies?: StringNullableFilter<"Client"> | string | null
     interests?: StringNullableFilter<"Client"> | string | null
     history?: StringNullableFilter<"Client"> | string | null
+    locationId?: StringNullableFilter<"Client"> | string | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
+    location?: XOR<LocationNullableScalarRelationFilter, LocationWhereInput> | null
     keyContacts?: KeyContactListRelationFilter
     careOutcomes?: CareOutcomeListRelationFilter
     careAssignments?: ClientCareAssignmentListRelationFilter
@@ -24677,6 +26241,7 @@ export namespace Prisma {
     allergies?: SortOrderInput | SortOrder
     interests?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
+    locationId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ClientCountOrderByAggregateInput
@@ -24710,6 +26275,7 @@ export namespace Prisma {
     allergies?: StringNullableWithAggregatesFilter<"Client"> | string | null
     interests?: StringNullableWithAggregatesFilter<"Client"> | string | null
     history?: StringNullableWithAggregatesFilter<"Client"> | string | null
+    locationId?: StringNullableWithAggregatesFilter<"Client"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
   }
@@ -25568,6 +27134,7 @@ export namespace Prisma {
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -25579,6 +27146,7 @@ export namespace Prisma {
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -25590,6 +27158,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25601,6 +27170,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25612,6 +27182,7 @@ export namespace Prisma {
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -25623,6 +27194,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25633,6 +27205,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25660,6 +27233,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateInput = {
@@ -25683,6 +27257,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUpdateInput = {
@@ -25706,6 +27281,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateInput = {
@@ -25729,6 +27305,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyCreateManyInput = {
@@ -25776,6 +27353,83 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LocationCreateInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agency: AgencyCreateNestedOneWithoutLocationsInput
+    users?: UserCreateNestedManyWithoutLocationsInput
+    clients?: ClientCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agencyId: string
+    users?: UserUncheckedCreateNestedManyWithoutLocationsInput
+    clients?: ClientUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agency?: AgencyUpdateOneRequiredWithoutLocationsNestedInput
+    users?: UserUpdateManyWithoutLocationsNestedInput
+    clients?: ClientUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+    users?: UserUncheckedUpdateManyWithoutLocationsNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationCreateManyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agencyId: string
+  }
+
+  export type LocationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserCreateInput = {
     id?: string
     cognitoId: string
@@ -25783,10 +27437,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -25808,11 +27464,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -25833,10 +27491,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -25858,11 +27518,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -25883,6 +27545,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
@@ -25896,6 +27559,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -25907,6 +27571,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25999,6 +27664,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -26034,6 +27700,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -26071,6 +27738,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -26106,6 +27774,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -26142,6 +27811,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26195,6 +27865,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27054,6 +28725,13 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type EnumSubRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubRole | EnumSubRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumSubRoleNullableFilter<$PrismaModel> | $Enums.SubRole | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -27077,11 +28755,17 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type InvitationCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     token?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     expiresAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -27093,6 +28777,7 @@ export namespace Prisma {
     email?: SortOrder
     token?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     expiresAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -27104,6 +28789,7 @@ export namespace Prisma {
     email?: SortOrder
     token?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     expiresAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -27136,6 +28822,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type EnumSubRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubRole | EnumSubRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumSubRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.SubRole | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumSubRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumSubRoleNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -27215,6 +28911,12 @@ export namespace Prisma {
     none?: MedicationDatabaseLinkWhereInput
   }
 
+  export type LocationListRelationFilter = {
+    every?: LocationWhereInput
+    some?: LocationWhereInput
+    none?: LocationWhereInput
+  }
+
   export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -27244,6 +28946,10 @@ export namespace Prisma {
   }
 
   export type MedicationDatabaseLinkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LocationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -27315,6 +29021,59 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type AgencyScalarRelationFilter = {
+    is?: AgencyWhereInput
+    isNot?: AgencyWhereInput
+  }
+
+  export type LocationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    agencyId?: SortOrder
+  }
+
+  export type LocationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    agencyId?: SortOrder
+  }
+
+  export type LocationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    agencyId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type InvitationListRelationFilter = {
     every?: InvitationWhereInput
     some?: InvitationWhereInput
@@ -27360,11 +29119,6 @@ export namespace Prisma {
     none?: MedicationRecordWhereInput
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type InvitationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -27392,6 +29146,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     agencyId?: SortOrder
@@ -27405,6 +29160,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     agencyId?: SortOrder
@@ -27418,33 +29174,11 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     role?: SortOrder
+    subRole?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     agencyId?: SortOrder
     invitedById?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type AgencyScalarRelationFilter = {
-    is?: AgencyWhereInput
-    isNot?: AgencyWhereInput
   }
 
   export type MedicationDatabaseLinkCountOrderByAggregateInput = {
@@ -27490,6 +29224,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type LocationNullableScalarRelationFilter = {
+    is?: LocationWhereInput | null
+    isNot?: LocationWhereInput | null
+  }
+
   export type KeyContactListRelationFilter = {
     every?: KeyContactWhereInput
     some?: KeyContactWhereInput
@@ -27533,6 +29272,7 @@ export namespace Prisma {
     allergies?: SortOrder
     interests?: SortOrder
     history?: SortOrder
+    locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -27560,6 +29300,7 @@ export namespace Prisma {
     allergies?: SortOrder
     interests?: SortOrder
     history?: SortOrder
+    locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -27587,6 +29328,7 @@ export namespace Prisma {
     allergies?: SortOrder
     interests?: SortOrder
     history?: SortOrder
+    locationId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -28134,6 +29876,10 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
+  export type NullableEnumSubRoleFieldUpdateOperationsInput = {
+    set?: $Enums.SubRole | null
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -28206,6 +29952,13 @@ export namespace Prisma {
     connect?: MedicationDatabaseLinkWhereUniqueInput | MedicationDatabaseLinkWhereUniqueInput[]
   }
 
+  export type LocationCreateNestedManyWithoutAgencyInput = {
+    create?: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput> | LocationCreateWithoutAgencyInput[] | LocationUncheckedCreateWithoutAgencyInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutAgencyInput | LocationCreateOrConnectWithoutAgencyInput[]
+    createMany?: LocationCreateManyAgencyInputEnvelope
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutAgencyInput = {
     create?: XOR<UserCreateWithoutAgencyInput, UserUncheckedCreateWithoutAgencyInput> | UserCreateWithoutAgencyInput[] | UserUncheckedCreateWithoutAgencyInput[]
     connectOrCreate?: UserCreateOrConnectWithoutAgencyInput | UserCreateOrConnectWithoutAgencyInput[]
@@ -28260,6 +30013,13 @@ export namespace Prisma {
     connectOrCreate?: MedicationDatabaseLinkCreateOrConnectWithoutAgencyInput | MedicationDatabaseLinkCreateOrConnectWithoutAgencyInput[]
     createMany?: MedicationDatabaseLinkCreateManyAgencyInputEnvelope
     connect?: MedicationDatabaseLinkWhereUniqueInput | MedicationDatabaseLinkWhereUniqueInput[]
+  }
+
+  export type LocationUncheckedCreateNestedManyWithoutAgencyInput = {
+    create?: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput> | LocationCreateWithoutAgencyInput[] | LocationUncheckedCreateWithoutAgencyInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutAgencyInput | LocationCreateOrConnectWithoutAgencyInput[]
+    createMany?: LocationCreateManyAgencyInputEnvelope
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -28378,6 +30138,20 @@ export namespace Prisma {
     deleteMany?: MedicationDatabaseLinkScalarWhereInput | MedicationDatabaseLinkScalarWhereInput[]
   }
 
+  export type LocationUpdateManyWithoutAgencyNestedInput = {
+    create?: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput> | LocationCreateWithoutAgencyInput[] | LocationUncheckedCreateWithoutAgencyInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutAgencyInput | LocationCreateOrConnectWithoutAgencyInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutAgencyInput | LocationUpsertWithWhereUniqueWithoutAgencyInput[]
+    createMany?: LocationCreateManyAgencyInputEnvelope
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutAgencyInput | LocationUpdateWithWhereUniqueWithoutAgencyInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutAgencyInput | LocationUpdateManyWithWhereWithoutAgencyInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutAgencyNestedInput = {
     create?: XOR<UserCreateWithoutAgencyInput, UserUncheckedCreateWithoutAgencyInput> | UserCreateWithoutAgencyInput[] | UserUncheckedCreateWithoutAgencyInput[]
     connectOrCreate?: UserCreateOrConnectWithoutAgencyInput | UserCreateOrConnectWithoutAgencyInput[]
@@ -28490,6 +30264,118 @@ export namespace Prisma {
     deleteMany?: MedicationDatabaseLinkScalarWhereInput | MedicationDatabaseLinkScalarWhereInput[]
   }
 
+  export type LocationUncheckedUpdateManyWithoutAgencyNestedInput = {
+    create?: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput> | LocationCreateWithoutAgencyInput[] | LocationUncheckedCreateWithoutAgencyInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutAgencyInput | LocationCreateOrConnectWithoutAgencyInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutAgencyInput | LocationUpsertWithWhereUniqueWithoutAgencyInput[]
+    createMany?: LocationCreateManyAgencyInputEnvelope
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutAgencyInput | LocationUpdateWithWhereUniqueWithoutAgencyInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutAgencyInput | LocationUpdateManyWithWhereWithoutAgencyInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
+  }
+
+  export type AgencyCreateNestedOneWithoutLocationsInput = {
+    create?: XOR<AgencyCreateWithoutLocationsInput, AgencyUncheckedCreateWithoutLocationsInput>
+    connectOrCreate?: AgencyCreateOrConnectWithoutLocationsInput
+    connect?: AgencyWhereUniqueInput
+  }
+
+  export type UserCreateNestedManyWithoutLocationsInput = {
+    create?: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput> | UserCreateWithoutLocationsInput[] | UserUncheckedCreateWithoutLocationsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationsInput | UserCreateOrConnectWithoutLocationsInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ClientCreateNestedManyWithoutLocationInput = {
+    create?: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput> | ClientCreateWithoutLocationInput[] | ClientUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutLocationInput | ClientCreateOrConnectWithoutLocationInput[]
+    createMany?: ClientCreateManyLocationInputEnvelope
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutLocationsInput = {
+    create?: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput> | UserCreateWithoutLocationsInput[] | UserUncheckedCreateWithoutLocationsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationsInput | UserCreateOrConnectWithoutLocationsInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ClientUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput> | ClientCreateWithoutLocationInput[] | ClientUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutLocationInput | ClientCreateOrConnectWithoutLocationInput[]
+    createMany?: ClientCreateManyLocationInputEnvelope
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type AgencyUpdateOneRequiredWithoutLocationsNestedInput = {
+    create?: XOR<AgencyCreateWithoutLocationsInput, AgencyUncheckedCreateWithoutLocationsInput>
+    connectOrCreate?: AgencyCreateOrConnectWithoutLocationsInput
+    upsert?: AgencyUpsertWithoutLocationsInput
+    connect?: AgencyWhereUniqueInput
+    update?: XOR<XOR<AgencyUpdateToOneWithWhereWithoutLocationsInput, AgencyUpdateWithoutLocationsInput>, AgencyUncheckedUpdateWithoutLocationsInput>
+  }
+
+  export type UserUpdateManyWithoutLocationsNestedInput = {
+    create?: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput> | UserCreateWithoutLocationsInput[] | UserUncheckedCreateWithoutLocationsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationsInput | UserCreateOrConnectWithoutLocationsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutLocationsInput | UserUpsertWithWhereUniqueWithoutLocationsInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutLocationsInput | UserUpdateWithWhereUniqueWithoutLocationsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutLocationsInput | UserUpdateManyWithWhereWithoutLocationsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ClientUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput> | ClientCreateWithoutLocationInput[] | ClientUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutLocationInput | ClientCreateOrConnectWithoutLocationInput[]
+    upsert?: ClientUpsertWithWhereUniqueWithoutLocationInput | ClientUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: ClientCreateManyLocationInputEnvelope
+    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    update?: ClientUpdateWithWhereUniqueWithoutLocationInput | ClientUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: ClientUpdateManyWithWhereWithoutLocationInput | ClientUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutLocationsNestedInput = {
+    create?: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput> | UserCreateWithoutLocationsInput[] | UserUncheckedCreateWithoutLocationsInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutLocationsInput | UserCreateOrConnectWithoutLocationsInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutLocationsInput | UserUpsertWithWhereUniqueWithoutLocationsInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutLocationsInput | UserUpdateWithWhereUniqueWithoutLocationsInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutLocationsInput | UserUpdateManyWithWhereWithoutLocationsInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ClientUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput> | ClientCreateWithoutLocationInput[] | ClientUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutLocationInput | ClientCreateOrConnectWithoutLocationInput[]
+    upsert?: ClientUpsertWithWhereUniqueWithoutLocationInput | ClientUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: ClientCreateManyLocationInputEnvelope
+    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    update?: ClientUpdateWithWhereUniqueWithoutLocationInput | ClientUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: ClientUpdateManyWithWhereWithoutLocationInput | ClientUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  }
+
   export type InvitationCreateNestedManyWithoutInviterInput = {
     create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
     connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
@@ -28501,6 +30387,12 @@ export namespace Prisma {
     create?: XOR<AgencyCreateWithoutUsersInput, AgencyUncheckedCreateWithoutUsersInput>
     connectOrCreate?: AgencyCreateOrConnectWithoutUsersInput
     connect?: AgencyWhereUniqueInput
+  }
+
+  export type LocationCreateNestedManyWithoutUsersInput = {
+    create?: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput> | LocationCreateWithoutUsersInput[] | LocationUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutUsersInput | LocationCreateOrConnectWithoutUsersInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
   }
 
   export type UserCreateNestedOneWithoutInvitedUsersInput = {
@@ -28590,6 +30482,12 @@ export namespace Prisma {
     connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
     createMany?: InvitationCreateManyInviterInputEnvelope
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  }
+
+  export type LocationUncheckedCreateNestedManyWithoutUsersInput = {
+    create?: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput> | LocationCreateWithoutUsersInput[] | LocationUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutUsersInput | LocationCreateOrConnectWithoutUsersInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
   }
 
   export type UserUncheckedCreateNestedManyWithoutInvitedByInput = {
@@ -28690,6 +30588,19 @@ export namespace Prisma {
     delete?: AgencyWhereInput | boolean
     connect?: AgencyWhereUniqueInput
     update?: XOR<XOR<AgencyUpdateToOneWithWhereWithoutUsersInput, AgencyUpdateWithoutUsersInput>, AgencyUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type LocationUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput> | LocationCreateWithoutUsersInput[] | LocationUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutUsersInput | LocationCreateOrConnectWithoutUsersInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutUsersInput | LocationUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutUsersInput | LocationUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutUsersInput | LocationUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
   }
 
   export type UserUpdateOneWithoutInvitedUsersNestedInput = {
@@ -28852,10 +30763,6 @@ export namespace Prisma {
     deleteMany?: IncidentReportScalarWhereInput | IncidentReportScalarWhereInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type InvitationUncheckedUpdateManyWithoutInviterNestedInput = {
     create?: XOR<InvitationCreateWithoutInviterInput, InvitationUncheckedCreateWithoutInviterInput> | InvitationCreateWithoutInviterInput[] | InvitationUncheckedCreateWithoutInviterInput[]
     connectOrCreate?: InvitationCreateOrConnectWithoutInviterInput | InvitationCreateOrConnectWithoutInviterInput[]
@@ -28868,6 +30775,19 @@ export namespace Prisma {
     update?: InvitationUpdateWithWhereUniqueWithoutInviterInput | InvitationUpdateWithWhereUniqueWithoutInviterInput[]
     updateMany?: InvitationUpdateManyWithWhereWithoutInviterInput | InvitationUpdateManyWithWhereWithoutInviterInput[]
     deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  }
+
+  export type LocationUncheckedUpdateManyWithoutUsersNestedInput = {
+    create?: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput> | LocationCreateWithoutUsersInput[] | LocationUncheckedCreateWithoutUsersInput[]
+    connectOrCreate?: LocationCreateOrConnectWithoutUsersInput | LocationCreateOrConnectWithoutUsersInput[]
+    upsert?: LocationUpsertWithWhereUniqueWithoutUsersInput | LocationUpsertWithWhereUniqueWithoutUsersInput[]
+    set?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    disconnect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    delete?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    connect?: LocationWhereUniqueInput | LocationWhereUniqueInput[]
+    update?: LocationUpdateWithWhereUniqueWithoutUsersInput | LocationUpdateWithWhereUniqueWithoutUsersInput[]
+    updateMany?: LocationUpdateManyWithWhereWithoutUsersInput | LocationUpdateManyWithWhereWithoutUsersInput[]
+    deleteMany?: LocationScalarWhereInput | LocationScalarWhereInput[]
   }
 
   export type UserUncheckedUpdateManyWithoutInvitedByNestedInput = {
@@ -29034,6 +30954,12 @@ export namespace Prisma {
     update?: XOR<XOR<AgencyUpdateToOneWithWhereWithoutMedicationsInput, AgencyUpdateWithoutMedicationsInput>, AgencyUncheckedUpdateWithoutMedicationsInput>
   }
 
+  export type LocationCreateNestedOneWithoutClientsInput = {
+    create?: XOR<LocationCreateWithoutClientsInput, LocationUncheckedCreateWithoutClientsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutClientsInput
+    connect?: LocationWhereUniqueInput
+  }
+
   export type KeyContactCreateNestedManyWithoutClientInput = {
     create?: XOR<KeyContactCreateWithoutClientInput, KeyContactUncheckedCreateWithoutClientInput> | KeyContactCreateWithoutClientInput[] | KeyContactUncheckedCreateWithoutClientInput[]
     connectOrCreate?: KeyContactCreateOrConnectWithoutClientInput | KeyContactCreateOrConnectWithoutClientInput[]
@@ -29172,6 +31098,16 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type LocationUpdateOneWithoutClientsNestedInput = {
+    create?: XOR<LocationCreateWithoutClientsInput, LocationUncheckedCreateWithoutClientsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutClientsInput
+    upsert?: LocationUpsertWithoutClientsInput
+    disconnect?: LocationWhereInput | boolean
+    delete?: LocationWhereInput | boolean
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutClientsInput, LocationUpdateWithoutClientsInput>, LocationUncheckedUpdateWithoutClientsInput>
   }
 
   export type KeyContactUpdateManyWithoutClientNestedInput = {
@@ -29883,6 +31819,13 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type NestedEnumSubRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubRole | EnumSubRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumSubRoleNullableFilter<$PrismaModel> | $Enums.SubRole | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -29937,6 +31880,27 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSubRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubRole | EnumSubRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.SubRole[] | ListEnumSubRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumSubRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.SubRole | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumSubRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumSubRoleNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -30005,17 +31969,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -30158,9 +32111,11 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -30182,10 +32137,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -30222,9 +32179,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -30246,10 +32205,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -30270,9 +32231,11 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -30294,10 +32257,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -30345,6 +32310,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -30378,6 +32344,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -30575,6 +32542,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LocationCreateWithoutAgencyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutLocationsInput
+    clients?: ClientCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutAgencyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutLocationsInput
+    clients?: ClientUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutAgencyInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput>
+  }
+
+  export type LocationCreateManyAgencyInputEnvelope = {
+    data: LocationCreateManyAgencyInput | LocationCreateManyAgencyInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithWhereUniqueWithoutAgencyInput = {
     where: UserWhereUniqueInput
     update: XOR<UserUpdateWithoutAgencyInput, UserUncheckedUpdateWithoutAgencyInput>
@@ -30601,6 +32600,7 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"User"> | $Enums.SubRole | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     agencyId?: StringNullableFilter<"User"> | string | null
@@ -30649,6 +32649,7 @@ export namespace Prisma {
     allergies?: StringNullableFilter<"Client"> | string | null
     interests?: StringNullableFilter<"Client"> | string | null
     history?: StringNullableFilter<"Client"> | string | null
+    locationId?: StringNullableFilter<"Client"> | string | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
   }
@@ -30830,11 +32831,320 @@ export namespace Prisma {
     agencyId?: StringFilter<"MedicationDatabaseLink"> | string
   }
 
+  export type LocationUpsertWithWhereUniqueWithoutAgencyInput = {
+    where: LocationWhereUniqueInput
+    update: XOR<LocationUpdateWithoutAgencyInput, LocationUncheckedUpdateWithoutAgencyInput>
+    create: XOR<LocationCreateWithoutAgencyInput, LocationUncheckedCreateWithoutAgencyInput>
+  }
+
+  export type LocationUpdateWithWhereUniqueWithoutAgencyInput = {
+    where: LocationWhereUniqueInput
+    data: XOR<LocationUpdateWithoutAgencyInput, LocationUncheckedUpdateWithoutAgencyInput>
+  }
+
+  export type LocationUpdateManyWithWhereWithoutAgencyInput = {
+    where: LocationScalarWhereInput
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyWithoutAgencyInput>
+  }
+
+  export type LocationScalarWhereInput = {
+    AND?: LocationScalarWhereInput | LocationScalarWhereInput[]
+    OR?: LocationScalarWhereInput[]
+    NOT?: LocationScalarWhereInput | LocationScalarWhereInput[]
+    id?: StringFilter<"Location"> | string
+    name?: StringFilter<"Location"> | string
+    address?: StringNullableFilter<"Location"> | string | null
+    isActive?: BoolFilter<"Location"> | boolean
+    createdAt?: DateTimeFilter<"Location"> | Date | string
+    updatedAt?: DateTimeFilter<"Location"> | Date | string
+    agencyId?: StringFilter<"Location"> | string
+  }
+
+  export type AgencyCreateWithoutLocationsInput = {
+    id?: string
+    name: string
+    isActive?: boolean
+    isSuspended?: boolean
+    hasScheduleV2?: boolean
+    hasEMAR?: boolean
+    hasFinance?: boolean
+    isWeek1And2ScheduleEnabled?: boolean
+    hasPoliciesAndProcedures?: boolean
+    isTestAccount?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutAgencyInput
+    clients?: ClientCreateNestedManyWithoutAgencyInput
+    schedules?: ScheduleCreateNestedManyWithoutAgencyInput
+    invoices?: InvoiceCreateNestedManyWithoutAgencyInput
+    mileageRecords?: MileageRecordCreateNestedManyWithoutAgencyInput
+    documents?: DocumentCreateNestedManyWithoutAgencyInput
+    incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
+    medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+  }
+
+  export type AgencyUncheckedCreateWithoutLocationsInput = {
+    id?: string
+    name: string
+    isActive?: boolean
+    isSuspended?: boolean
+    hasScheduleV2?: boolean
+    hasEMAR?: boolean
+    hasFinance?: boolean
+    isWeek1And2ScheduleEnabled?: boolean
+    hasPoliciesAndProcedures?: boolean
+    isTestAccount?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutAgencyInput
+    clients?: ClientUncheckedCreateNestedManyWithoutAgencyInput
+    schedules?: ScheduleUncheckedCreateNestedManyWithoutAgencyInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutAgencyInput
+    mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutAgencyInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
+    incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
+    medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+  }
+
+  export type AgencyCreateOrConnectWithoutLocationsInput = {
+    where: AgencyWhereUniqueInput
+    create: XOR<AgencyCreateWithoutLocationsInput, AgencyUncheckedCreateWithoutLocationsInput>
+  }
+
+  export type UserCreateWithoutLocationsInput = {
+    id?: string
+    cognitoId: string
+    email: string
+    firstName: string
+    lastName: string
+    role: $Enums.Role
+    subRole?: $Enums.SubRole | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
+    agency?: AgencyCreateNestedOneWithoutUsersInput
+    invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
+    invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
+    careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
+    schedules?: ScheduleCreateNestedManyWithoutUserInput
+    careReports?: ReportCreateNestedManyWithoutCaregiverInput
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutReceiverInput
+    medicationRecords?: MedicationRecordCreateNestedManyWithoutUserInput
+    mileageRecords?: MileageRecordCreateNestedManyWithoutUserInput
+    documents?: DocumentCreateNestedManyWithoutUserInput
+    incidentReports?: IncidentReportCreateNestedManyWithoutReporterInput
+  }
+
+  export type UserUncheckedCreateWithoutLocationsInput = {
+    id?: string
+    cognitoId: string
+    email: string
+    firstName: string
+    lastName: string
+    role: $Enums.Role
+    subRole?: $Enums.SubRole | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agencyId?: string | null
+    invitedById?: string | null
+    sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
+    careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
+    schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
+    careReports?: ReportUncheckedCreateNestedManyWithoutCaregiverInput
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutReceiverInput
+    medicationRecords?: MedicationRecordUncheckedCreateNestedManyWithoutUserInput
+    mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutUserInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutUserInput
+    incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutReporterInput
+  }
+
+  export type UserCreateOrConnectWithoutLocationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput>
+  }
+
+  export type ClientCreateWithoutLocationInput = {
+    id?: string
+    title?: string | null
+    firstName: string
+    lastName: string
+    clientId?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    townOrCity: string
+    county: string
+    postalCode: string
+    propertyAccess?: string | null
+    phoneNumber?: string | null
+    nhsNumber?: string | null
+    dnraOrder?: boolean | null
+    mobility?: string | null
+    likesDislikes?: string | null
+    dateOfBirth?: Date | string | null
+    languages?: string | null
+    allergies?: string | null
+    interests?: string | null
+    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    keyContacts?: KeyContactCreateNestedManyWithoutClientInput
+    careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
+    careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
+    schedules?: ScheduleCreateNestedManyWithoutClientInput
+    reports?: ReportCreateNestedManyWithoutClientInput
+    medications?: MedicationRecordCreateNestedManyWithoutClientInput
+    documents?: DocumentCreateNestedManyWithoutClientInput
+    mileageRecords?: MileageRecordCreateNestedManyWithoutClientInput
+    invoices?: InvoiceCreateNestedManyWithoutClientInput
+    agency: AgencyCreateNestedOneWithoutClientsInput
+  }
+
+  export type ClientUncheckedCreateWithoutLocationInput = {
+    id?: string
+    agencyId: string
+    title?: string | null
+    firstName: string
+    lastName: string
+    clientId?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    townOrCity: string
+    county: string
+    postalCode: string
+    propertyAccess?: string | null
+    phoneNumber?: string | null
+    nhsNumber?: string | null
+    dnraOrder?: boolean | null
+    mobility?: string | null
+    likesDislikes?: string | null
+    dateOfBirth?: Date | string | null
+    languages?: string | null
+    allergies?: string | null
+    interests?: string | null
+    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
+    careOutcomes?: CareOutcomeUncheckedCreateNestedManyWithoutClientInput
+    careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutClientInput
+    schedules?: ScheduleUncheckedCreateNestedManyWithoutClientInput
+    reports?: ReportUncheckedCreateNestedManyWithoutClientInput
+    medications?: MedicationRecordUncheckedCreateNestedManyWithoutClientInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutClientInput
+    mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutClientInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type ClientCreateOrConnectWithoutLocationInput = {
+    where: ClientWhereUniqueInput
+    create: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput>
+  }
+
+  export type ClientCreateManyLocationInputEnvelope = {
+    data: ClientCreateManyLocationInput | ClientCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AgencyUpsertWithoutLocationsInput = {
+    update: XOR<AgencyUpdateWithoutLocationsInput, AgencyUncheckedUpdateWithoutLocationsInput>
+    create: XOR<AgencyCreateWithoutLocationsInput, AgencyUncheckedCreateWithoutLocationsInput>
+    where?: AgencyWhereInput
+  }
+
+  export type AgencyUpdateToOneWithWhereWithoutLocationsInput = {
+    where?: AgencyWhereInput
+    data: XOR<AgencyUpdateWithoutLocationsInput, AgencyUncheckedUpdateWithoutLocationsInput>
+  }
+
+  export type AgencyUpdateWithoutLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isSuspended?: BoolFieldUpdateOperationsInput | boolean
+    hasScheduleV2?: BoolFieldUpdateOperationsInput | boolean
+    hasEMAR?: BoolFieldUpdateOperationsInput | boolean
+    hasFinance?: BoolFieldUpdateOperationsInput | boolean
+    isWeek1And2ScheduleEnabled?: BoolFieldUpdateOperationsInput | boolean
+    hasPoliciesAndProcedures?: BoolFieldUpdateOperationsInput | boolean
+    isTestAccount?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutAgencyNestedInput
+    clients?: ClientUpdateManyWithoutAgencyNestedInput
+    schedules?: ScheduleUpdateManyWithoutAgencyNestedInput
+    invoices?: InvoiceUpdateManyWithoutAgencyNestedInput
+    mileageRecords?: MileageRecordUpdateManyWithoutAgencyNestedInput
+    documents?: DocumentUpdateManyWithoutAgencyNestedInput
+    incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
+    medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+  }
+
+  export type AgencyUncheckedUpdateWithoutLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isSuspended?: BoolFieldUpdateOperationsInput | boolean
+    hasScheduleV2?: BoolFieldUpdateOperationsInput | boolean
+    hasEMAR?: BoolFieldUpdateOperationsInput | boolean
+    hasFinance?: BoolFieldUpdateOperationsInput | boolean
+    isWeek1And2ScheduleEnabled?: BoolFieldUpdateOperationsInput | boolean
+    hasPoliciesAndProcedures?: BoolFieldUpdateOperationsInput | boolean
+    isTestAccount?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutAgencyNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutAgencyNestedInput
+    schedules?: ScheduleUncheckedUpdateManyWithoutAgencyNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutAgencyNestedInput
+    mileageRecords?: MileageRecordUncheckedUpdateManyWithoutAgencyNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
+    incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
+    medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutLocationsInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutLocationsInput, UserUncheckedUpdateWithoutLocationsInput>
+    create: XOR<UserCreateWithoutLocationsInput, UserUncheckedCreateWithoutLocationsInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutLocationsInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutLocationsInput, UserUncheckedUpdateWithoutLocationsInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutLocationsInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutLocationsInput>
+  }
+
+  export type ClientUpsertWithWhereUniqueWithoutLocationInput = {
+    where: ClientWhereUniqueInput
+    update: XOR<ClientUpdateWithoutLocationInput, ClientUncheckedUpdateWithoutLocationInput>
+    create: XOR<ClientCreateWithoutLocationInput, ClientUncheckedCreateWithoutLocationInput>
+  }
+
+  export type ClientUpdateWithWhereUniqueWithoutLocationInput = {
+    where: ClientWhereUniqueInput
+    data: XOR<ClientUpdateWithoutLocationInput, ClientUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type ClientUpdateManyWithWhereWithoutLocationInput = {
+    where: ClientScalarWhereInput
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyWithoutLocationInput>
+  }
+
   export type InvitationCreateWithoutInviterInput = {
     id?: string
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -30845,6 +33155,7 @@ export namespace Prisma {
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -30880,6 +33191,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutUsersInput = {
@@ -30902,11 +33214,39 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutUsersInput = {
     where: AgencyWhereUniqueInput
     create: XOR<AgencyCreateWithoutUsersInput, AgencyUncheckedCreateWithoutUsersInput>
+  }
+
+  export type LocationCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agency: AgencyCreateNestedOneWithoutLocationsInput
+    clients?: ClientCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agencyId: string
+    clients?: ClientUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationCreateOrConnectWithoutUsersInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput>
   }
 
   export type UserCreateWithoutInvitedUsersInput = {
@@ -30916,10 +33256,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
@@ -30940,11 +33282,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
     careReports?: ReportUncheckedCreateNestedManyWithoutCaregiverInput
@@ -30969,10 +33313,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
@@ -30993,10 +33339,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -31315,6 +33663,7 @@ export namespace Prisma {
     email?: StringFilter<"Invitation"> | string
     token?: StringFilter<"Invitation"> | string
     role?: EnumRoleFilter<"Invitation"> | $Enums.Role
+    subRole?: EnumSubRoleNullableFilter<"Invitation"> | $Enums.SubRole | null
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
     status?: EnumInvitationStatusFilter<"Invitation"> | $Enums.InvitationStatus
     createdAt?: DateTimeFilter<"Invitation"> | Date | string
@@ -31352,6 +33701,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutUsersInput = {
@@ -31374,6 +33724,23 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
+  }
+
+  export type LocationUpsertWithWhereUniqueWithoutUsersInput = {
+    where: LocationWhereUniqueInput
+    update: XOR<LocationUpdateWithoutUsersInput, LocationUncheckedUpdateWithoutUsersInput>
+    create: XOR<LocationCreateWithoutUsersInput, LocationUncheckedCreateWithoutUsersInput>
+  }
+
+  export type LocationUpdateWithWhereUniqueWithoutUsersInput = {
+    where: LocationWhereUniqueInput
+    data: XOR<LocationUpdateWithoutUsersInput, LocationUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type LocationUpdateManyWithWhereWithoutUsersInput = {
+    where: LocationScalarWhereInput
+    data: XOR<LocationUpdateManyMutationInput, LocationUncheckedUpdateManyWithoutUsersInput>
   }
 
   export type UserUpsertWithoutInvitedUsersInput = {
@@ -31394,10 +33761,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
@@ -31418,11 +33787,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
     careReports?: ReportUncheckedUpdateManyWithoutCaregiverNestedInput
@@ -31690,6 +34061,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordCreateNestedManyWithoutAgencyInput
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutMedicationsInput = {
@@ -31712,6 +34084,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutAgencyInput
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutMedicationsInput = {
@@ -31750,6 +34123,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUpdateManyWithoutAgencyNestedInput
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutMedicationsInput = {
@@ -31772,6 +34146,34 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedUpdateManyWithoutAgencyNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
+  }
+
+  export type LocationCreateWithoutClientsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agency: AgencyCreateNestedOneWithoutLocationsInput
+    users?: UserCreateNestedManyWithoutLocationsInput
+  }
+
+  export type LocationUncheckedCreateWithoutClientsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    agencyId: string
+    users?: UserUncheckedCreateNestedManyWithoutLocationsInput
+  }
+
+  export type LocationCreateOrConnectWithoutClientsInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutClientsInput, LocationUncheckedCreateWithoutClientsInput>
   }
 
   export type KeyContactCreateWithoutClientInput = {
@@ -32048,6 +34450,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutClientsInput = {
@@ -32070,11 +34473,45 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutClientsInput = {
     where: AgencyWhereUniqueInput
     create: XOR<AgencyCreateWithoutClientsInput, AgencyUncheckedCreateWithoutClientsInput>
+  }
+
+  export type LocationUpsertWithoutClientsInput = {
+    update: XOR<LocationUpdateWithoutClientsInput, LocationUncheckedUpdateWithoutClientsInput>
+    create: XOR<LocationCreateWithoutClientsInput, LocationUncheckedCreateWithoutClientsInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutClientsInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutClientsInput, LocationUncheckedUpdateWithoutClientsInput>
+  }
+
+  export type LocationUpdateWithoutClientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agency?: AgencyUpdateOneRequiredWithoutLocationsNestedInput
+    users?: UserUpdateManyWithoutLocationsNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutClientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+    users?: UserUncheckedUpdateManyWithoutLocationsNestedInput
   }
 
   export type KeyContactUpsertWithWhereUniqueWithoutClientInput = {
@@ -32273,6 +34710,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutClientsInput = {
@@ -32295,6 +34733,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type ClientCreateWithoutCareAssignmentsInput = {
@@ -32321,6 +34760,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     schedules?: ScheduleCreateNestedManyWithoutClientInput
@@ -32355,6 +34795,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -32379,10 +34820,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
@@ -32403,11 +34846,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
     careReports?: ReportUncheckedCreateNestedManyWithoutCaregiverInput
@@ -32460,6 +34905,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     schedules?: ScheduleUpdateManyWithoutClientNestedInput
@@ -32494,6 +34940,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -32524,10 +34971,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
@@ -32548,11 +34997,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
     careReports?: ReportUncheckedUpdateManyWithoutCaregiverNestedInput
@@ -32585,6 +35036,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutSchedulesInput = {
@@ -32607,6 +35059,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutSchedulesInput = {
@@ -32621,10 +35074,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -32645,11 +35100,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     careReports?: ReportUncheckedCreateNestedManyWithoutCaregiverInput
@@ -32691,6 +35148,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -32725,6 +35183,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -32773,6 +35232,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutSchedulesInput = {
@@ -32795,6 +35255,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type UserUpsertWithoutSchedulesInput = {
@@ -32815,10 +35276,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -32839,11 +35302,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     careReports?: ReportUncheckedUpdateManyWithoutCaregiverNestedInput
@@ -32891,6 +35356,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -32925,6 +35391,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -32983,6 +35450,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -33017,6 +35485,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -33041,10 +35510,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -33065,11 +35536,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -33148,6 +35621,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -33182,6 +35656,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -33212,10 +35687,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -33236,11 +35713,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -33320,10 +35799,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -33344,11 +35825,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -33390,6 +35873,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -33424,6 +35908,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -33459,10 +35944,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -33483,11 +35970,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -33535,6 +36024,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -33569,6 +36059,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -33601,6 +36092,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutInvoicesInput = {
@@ -33623,6 +36115,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutInvoicesInput = {
@@ -33654,6 +36147,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -33688,6 +36182,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -33736,6 +36231,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutInvoicesInput = {
@@ -33758,6 +36254,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type ClientUpsertWithoutInvoicesInput = {
@@ -33795,6 +36292,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -33829,6 +36327,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -33861,6 +36360,7 @@ export namespace Prisma {
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutMileageRecordsInput = {
@@ -33883,6 +36383,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutMileageRecordsInput = {
@@ -33897,10 +36398,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -33921,11 +36424,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -33967,6 +36472,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -34001,6 +36507,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -34049,6 +36556,7 @@ export namespace Prisma {
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutMileageRecordsInput = {
@@ -34071,6 +36579,7 @@ export namespace Prisma {
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type UserUpsertWithoutMileageRecordsInput = {
@@ -34091,10 +36600,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -34115,11 +36626,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -34167,6 +36680,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -34201,6 +36715,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -34220,10 +36735,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -34244,11 +36761,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -34290,6 +36809,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
@@ -34324,6 +36844,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -34361,6 +36882,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutDocumentsInput = {
@@ -34383,6 +36905,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutAgencyInput
     incidentReports?: IncidentReportUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutDocumentsInput = {
@@ -34408,10 +36931,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -34432,11 +36957,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -34484,6 +37011,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -34518,6 +37046,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -34561,6 +37090,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutDocumentsInput = {
@@ -34583,6 +37113,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedUpdateManyWithoutAgencyNestedInput
     incidentReports?: IncidentReportUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -34592,10 +37123,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -34616,11 +37149,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -34656,10 +37191,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -34680,11 +37217,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -34704,10 +37243,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -34728,11 +37269,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -34770,6 +37313,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordCreateNestedManyWithoutAgencyInput
     documents?: DocumentCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkCreateNestedManyWithoutAgencyInput
+    locations?: LocationCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyUncheckedCreateWithoutIncidentReportsInput = {
@@ -34792,6 +37336,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedCreateNestedManyWithoutAgencyInput
     documents?: DocumentUncheckedCreateNestedManyWithoutAgencyInput
     medications?: MedicationDatabaseLinkUncheckedCreateNestedManyWithoutAgencyInput
+    locations?: LocationUncheckedCreateNestedManyWithoutAgencyInput
   }
 
   export type AgencyCreateOrConnectWithoutIncidentReportsInput = {
@@ -34817,10 +37362,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -34841,11 +37388,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -34889,6 +37438,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUpdateManyWithoutAgencyNestedInput
     documents?: DocumentUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUpdateManyWithoutAgencyNestedInput
   }
 
   export type AgencyUncheckedUpdateWithoutIncidentReportsInput = {
@@ -34911,6 +37461,7 @@ export namespace Prisma {
     mileageRecords?: MileageRecordUncheckedUpdateManyWithoutAgencyNestedInput
     documents?: DocumentUncheckedUpdateManyWithoutAgencyNestedInput
     medications?: MedicationDatabaseLinkUncheckedUpdateManyWithoutAgencyNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutAgencyNestedInput
   }
 
   export type UserCreateWithoutSentMessagesInput = {
@@ -34920,10 +37471,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -34944,11 +37497,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -34973,10 +37528,12 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sentInvitations?: InvitationCreateNestedManyWithoutInviterInput
     agency?: AgencyCreateNestedOneWithoutUsersInput
+    locations?: LocationCreateNestedManyWithoutUsersInput
     invitedBy?: UserCreateNestedOneWithoutInvitedUsersInput
     invitedUsers?: UserCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutUserInput
@@ -34997,11 +37554,13 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
     invitedById?: string | null
     sentInvitations?: InvitationUncheckedCreateNestedManyWithoutInviterInput
+    locations?: LocationUncheckedCreateNestedManyWithoutUsersInput
     invitedUsers?: UserUncheckedCreateNestedManyWithoutInvitedByInput
     careAssignments?: ClientCareAssignmentUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
@@ -35037,10 +37596,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -35061,11 +37622,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -35096,10 +37659,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -35120,11 +37685,13 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -35161,6 +37728,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     careOutcomes?: CareOutcomeCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
     schedules?: ScheduleCreateNestedManyWithoutClientInput
@@ -35195,6 +37763,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     careOutcomes?: CareOutcomeUncheckedCreateNestedManyWithoutClientInput
@@ -35247,6 +37816,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
     schedules?: ScheduleUpdateManyWithoutClientNestedInput
@@ -35281,6 +37851,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     careOutcomes?: CareOutcomeUncheckedUpdateManyWithoutClientNestedInput
@@ -35317,6 +37888,7 @@ export namespace Prisma {
     history?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    location?: LocationCreateNestedOneWithoutClientsInput
     keyContacts?: KeyContactCreateNestedManyWithoutClientInput
     careAssignments?: ClientCareAssignmentCreateNestedManyWithoutClientInput
     schedules?: ScheduleCreateNestedManyWithoutClientInput
@@ -35351,6 +37923,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     keyContacts?: KeyContactUncheckedCreateNestedManyWithoutClientInput
@@ -35403,6 +37976,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
     schedules?: ScheduleUpdateManyWithoutClientNestedInput
@@ -35437,6 +38011,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -35456,6 +38031,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     invitedById?: string | null
@@ -35483,6 +38059,7 @@ export namespace Prisma {
     allergies?: string | null
     interests?: string | null
     history?: string | null
+    locationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -35544,6 +38121,15 @@ export namespace Prisma {
     source: string
   }
 
+  export type LocationCreateManyAgencyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserUpdateWithoutAgencyInput = {
     id?: StringFieldUpdateOperationsInput | string
     cognitoId?: StringFieldUpdateOperationsInput | string
@@ -35551,9 +38137,11 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
@@ -35575,10 +38163,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -35599,6 +38189,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35628,6 +38219,7 @@ export namespace Prisma {
     history?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: LocationUpdateOneWithoutClientsNestedInput
     keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
     careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
@@ -35661,6 +38253,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
@@ -35696,6 +38289,7 @@ export namespace Prisma {
     allergies?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableStringFieldUpdateOperationsInput | string | null
+    locationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35871,11 +38465,235 @@ export namespace Prisma {
     source?: StringFieldUpdateOperationsInput | string
   }
 
+  export type LocationUpdateWithoutAgencyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutLocationsNestedInput
+    clients?: ClientUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutAgencyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutLocationsNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateManyWithoutAgencyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClientCreateManyLocationInput = {
+    id?: string
+    agencyId: string
+    title?: string | null
+    firstName: string
+    lastName: string
+    clientId?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    townOrCity: string
+    county: string
+    postalCode: string
+    propertyAccess?: string | null
+    phoneNumber?: string | null
+    nhsNumber?: string | null
+    dnraOrder?: boolean | null
+    mobility?: string | null
+    likesDislikes?: string | null
+    dateOfBirth?: Date | string | null
+    languages?: string | null
+    allergies?: string | null
+    interests?: string | null
+    history?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateWithoutLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
+    agency?: AgencyUpdateOneWithoutUsersNestedInput
+    invitedBy?: UserUpdateOneWithoutInvitedUsersNestedInput
+    invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
+    careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUpdateManyWithoutUserNestedInput
+    careReports?: ReportUpdateManyWithoutCaregiverNestedInput
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutReceiverNestedInput
+    medicationRecords?: MedicationRecordUpdateManyWithoutUserNestedInput
+    mileageRecords?: MileageRecordUpdateManyWithoutUserNestedInput
+    documents?: DocumentUpdateManyWithoutUserNestedInput
+    incidentReports?: IncidentReportUpdateManyWithoutReporterNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: NullableStringFieldUpdateOperationsInput | string | null
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+    sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
+    careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
+    careReports?: ReportUncheckedUpdateManyWithoutCaregiverNestedInput
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutReceiverNestedInput
+    medicationRecords?: MedicationRecordUncheckedUpdateManyWithoutUserNestedInput
+    mileageRecords?: MileageRecordUncheckedUpdateManyWithoutUserNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutUserNestedInput
+    incidentReports?: IncidentReportUncheckedUpdateManyWithoutReporterNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutLocationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cognitoId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: NullableStringFieldUpdateOperationsInput | string | null
+    invitedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ClientUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    townOrCity?: StringFieldUpdateOperationsInput | string
+    county?: StringFieldUpdateOperationsInput | string
+    postalCode?: StringFieldUpdateOperationsInput | string
+    propertyAccess?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    nhsNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    dnraOrder?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mobility?: NullableStringFieldUpdateOperationsInput | string | null
+    likesDislikes?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    languages?: NullableStringFieldUpdateOperationsInput | string | null
+    allergies?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    keyContacts?: KeyContactUpdateManyWithoutClientNestedInput
+    careOutcomes?: CareOutcomeUpdateManyWithoutClientNestedInput
+    careAssignments?: ClientCareAssignmentUpdateManyWithoutClientNestedInput
+    schedules?: ScheduleUpdateManyWithoutClientNestedInput
+    reports?: ReportUpdateManyWithoutClientNestedInput
+    medications?: MedicationRecordUpdateManyWithoutClientNestedInput
+    documents?: DocumentUpdateManyWithoutClientNestedInput
+    mileageRecords?: MileageRecordUpdateManyWithoutClientNestedInput
+    invoices?: InvoiceUpdateManyWithoutClientNestedInput
+    agency?: AgencyUpdateOneRequiredWithoutClientsNestedInput
+  }
+
+  export type ClientUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    townOrCity?: StringFieldUpdateOperationsInput | string
+    county?: StringFieldUpdateOperationsInput | string
+    postalCode?: StringFieldUpdateOperationsInput | string
+    propertyAccess?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    nhsNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    dnraOrder?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mobility?: NullableStringFieldUpdateOperationsInput | string | null
+    likesDislikes?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    languages?: NullableStringFieldUpdateOperationsInput | string | null
+    allergies?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    keyContacts?: KeyContactUncheckedUpdateManyWithoutClientNestedInput
+    careOutcomes?: CareOutcomeUncheckedUpdateManyWithoutClientNestedInput
+    careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutClientNestedInput
+    schedules?: ScheduleUncheckedUpdateManyWithoutClientNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutClientNestedInput
+    medications?: MedicationRecordUncheckedUpdateManyWithoutClientNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutClientNestedInput
+    mileageRecords?: MileageRecordUncheckedUpdateManyWithoutClientNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type ClientUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    townOrCity?: StringFieldUpdateOperationsInput | string
+    county?: StringFieldUpdateOperationsInput | string
+    postalCode?: StringFieldUpdateOperationsInput | string
+    propertyAccess?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    nhsNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    dnraOrder?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    mobility?: NullableStringFieldUpdateOperationsInput | string | null
+    likesDislikes?: NullableStringFieldUpdateOperationsInput | string | null
+    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    languages?: NullableStringFieldUpdateOperationsInput | string | null
+    allergies?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type InvitationCreateManyInviterInput = {
     id?: string
     email: string
     token: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     expiresAt: Date | string
     status?: $Enums.InvitationStatus
     createdAt?: Date | string
@@ -35888,6 +38706,7 @@ export namespace Prisma {
     firstName: string
     lastName: string
     role: $Enums.Role
+    subRole?: $Enums.SubRole | null
     createdAt?: Date | string
     updatedAt?: Date | string
     agencyId?: string | null
@@ -35978,6 +38797,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35988,6 +38808,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35998,9 +38819,42 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LocationUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agency?: AgencyUpdateOneRequiredWithoutLocationsNestedInput
+    clients?: ClientUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: StringFieldUpdateOperationsInput | string
+    clients?: ClientUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationUncheckedUpdateManyWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    agencyId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUpdateWithoutInvitedByInput = {
@@ -36010,10 +38864,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sentInvitations?: InvitationUpdateManyWithoutInviterNestedInput
     agency?: AgencyUpdateOneWithoutUsersNestedInput
+    locations?: LocationUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
@@ -36034,10 +38890,12 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null
     sentInvitations?: InvitationUncheckedUpdateManyWithoutInviterNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutUsersNestedInput
     invitedUsers?: UserUncheckedUpdateManyWithoutInvitedByNestedInput
     careAssignments?: ClientCareAssignmentUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
@@ -36058,6 +38916,7 @@ export namespace Prisma {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    subRole?: NullableEnumSubRoleFieldUpdateOperationsInput | $Enums.SubRole | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     agencyId?: NullableStringFieldUpdateOperationsInput | string | null

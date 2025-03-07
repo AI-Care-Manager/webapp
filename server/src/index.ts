@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes";
 import agencyRoutes from "./routes/agencyRoutes";
 //import { authMiddleware } from "./middleware/authMiddleware";
 import invitationRoutes from "./routes/invitationRoutes";
+import locationRoutes from "./routes/locationRoutes";
 
 
 /* CONFIGURATIONS */
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 app.use("/users", userRoutes);
 app.use("/agencies", agencyRoutes);
 app.use("/invitations", invitationRoutes);
+app.use("/locations", locationRoutes);
 
 /* SERVER */
 app.listen(PORT, () => {

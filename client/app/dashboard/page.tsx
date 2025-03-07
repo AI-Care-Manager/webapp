@@ -13,151 +13,143 @@ import {
 import { Button } from "../../components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "../../components/ui/table";
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "../../components/ui/tabs";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
-import { Bell, MoreHorizontal, Plus, Check, X, Loader } from "lucide-react";
-import { Input } from "../../components/ui/input";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from "../../components/ui/dialog";
-import { Label } from "../../components/ui/label";
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "../../components/ui/card";
+
+import { Bell, Plus, } from "lucide-react";
+
 import { toast } from "sonner";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { AddUserDialog, LoadingSpinner, NotificationsDialog, UsersTable } from "./components";
 
 
+// Main component
 const DashboardPage = () => {
     const router = useRouter();
-    const { data: authUser, isLoading: isUserLoading, error: userError } = useGetUserQuery();
     const { signOut, user } = useAuthenticator((context) => [context.signOut, context.user]);
-    const [isAddClientOpen, setIsAddClientOpen] = useState(false);
+
+    // State
+    const [isAddUserOpen, setIsAddUserOpen] = useState(false);
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-    const [newClientEmail, setNewClientEmail] = useState("");
-    const [newClientName, setNewClientName] = useState("");
     const [shouldRedirect, setShouldRedirect] = useState(false);
+    const [activeUserType, setActiveUserType] = useState("CLIENT");
 
-    const [notifications, setNotifications] = useState([]);
+    // Queries
+    const {
+        data: authUser,
+        isLoading: isUserLoading,
+        error: userError
+    } = useGetUserQuery();
 
-    console.log("authUser", authUser);
-
-    const { data: invitations = [], isLoading: isInvitationsLoading } = useGetInvitationsByEmailQuery(
-        authUser?.userInfo?.email || '',
-        { skip: !authUser?.userInfo?.email }
-    );
-
-    console.log("invitations received", invitations);
-
-    // RTK Query hooks
-    const { data: clients = [], isLoading: isClientsLoading } = useGetUserInvitationsQuery(
+    const {
+        data: allUsers = [],
+        isLoading: isUsersLoading
+    } = useGetUserInvitationsQuery(
         authUser?.userInfo?.id || '',
         { skip: !authUser?.userInfo?.id }
     );
 
-    console.log("clients", clients);
+    const {
+        data: invitations = [],
+        isLoading: isInvitationsLoading
+    } = useGetInvitationsByEmailQuery(
+        authUser?.userInfo?.email || '',
+        { skip: !authUser?.userInfo?.email }
+    );
+
+    // Mutations
     const [createInvitation, { isLoading: isCreatingInvitation }] = useCreateInvitationMutation();
     const [cancelInvitation, { isLoading: isCancellingInvitation }] = useCancelInvitationMutation();
     const [acceptInvitation, { isLoading: isAcceptingInvitation }] = useAcceptInvitationMutation();
 
     // Combined loading state
-    const isLoading = isUserLoading || isClientsLoading || isCreatingInvitation || isCancellingInvitation;
+    const isLoading = isUserLoading || isUsersLoading || isCreatingInvitation || isCancellingInvitation;
 
-    // Display toast if user creation fails
+    // Handle user error
     useEffect(() => {
         if (userError) {
             toast.error(`${userError}`);
-            console.log("User error:", userError);
+            console.error("User error:", userError);
         }
     }, [userError]);
 
-    // Check authentication and set redirect flag
+    // Authentication check
     useEffect(() => {
         if (!user && !isUserLoading) {
             setShouldRedirect(true);
         }
     }, [user, isUserLoading]);
 
-    // Handle redirect in useEffect instead of during render
+    // Handle redirect
     useEffect(() => {
         if (shouldRedirect) {
             router.push("/");
         }
     }, [shouldRedirect, router]);
 
+    // Handlers
     const handleSignOut = async () => {
         await signOut();
-        // Clear any auth headers/tokens
         localStorage.clear();
         sessionStorage.clear();
-        // Redirect to sign in page
         router.push("/");
     };
 
-    const handleAddClient = async () => {
-        if (newClientEmail && authUser?.userInfo?.id) {
+    const handleAddUser = async (email: string, role: string) => {
+        if (email && authUser?.userInfo?.id) {
             try {
                 await createInvitation({
                     inviterUserId: authUser.userInfo.id,
-                    email: newClientEmail,
-                    role: "CLIENT", // Assuming client role
-                    expirationDays: 7 // Default expiration
+                    email: email,
+                    role: role,
+                    expirationDays: 7
                 }).unwrap();
 
-                toast.success(`Invitation sent to ${newClientEmail}`);
-
-                // Reset form and close dialog
-                setNewClientEmail("");
-                setNewClientName("");
-                setIsAddClientOpen(false);
+                toast.success(`Invitation sent to ${email}`);
+                setIsAddUserOpen(false);
             } catch (error: any) {
                 toast.error(error.data?.error || "Failed to send invitation");
             }
         }
     };
 
-    const handleSendInvite = async (client: Client) => {
+    const handleSendInvite = async (user: any) => {
         if (authUser?.userInfo?.id) {
             try {
-                // Resend invitation by creating a new one
                 await createInvitation({
                     inviterUserId: authUser.userInfo.id,
-                    email: client.email,
-                    role: "CLIENT",
+                    email: user.email,
+                    role: user.role,
                     expirationDays: 7
                 }).unwrap();
 
-                toast.success(`Invitation resent to ${client.email}`);
+                toast.success(`Invitation resent to ${user.email}`);
             } catch (error: any) {
                 toast.error(error.data?.error || "Failed to resend invitation");
             }
         }
     };
 
-    const handleCancelInvitation = async (client: Client) => {
+    const handleCancelInvitation = async (user: any) => {
         if (authUser?.userInfo?.id) {
             try {
                 await cancelInvitation({
-                    invitationId: client.id,
+                    invitationId: user.id,
                     userId: authUser.userInfo.id
                 }).unwrap();
 
-                toast.success(`Invitation to ${client.email} has been cancelled`);
+                toast.success(`Invitation to ${user.email} has been cancelled`);
             } catch (error: any) {
                 toast.error(error.data?.error || "Failed to cancel invitation");
             }
@@ -169,7 +161,7 @@ const DashboardPage = () => {
             await acceptInvitation({
                 invitationId,
                 userId: authUser?.userInfo?.id || ''
-            })
+            });
             toast.success("Invitation accepted");
             setIsNotificationsOpen(false);
         } catch (error: any) {
@@ -183,38 +175,35 @@ const DashboardPage = () => {
         setIsNotificationsOpen(false);
     };
 
-    // Return null during loading or if should redirect
+    // Count users by role
+    const clientCount = allUsers.filter((user: any) => user.role === "CLIENT").length;
+    const careWorkerCount = allUsers.filter((user: any) => user.role === "CARE_WORKER").length;
+    const officeStaffCount = allUsers.filter((user: any) => user.role === "OFFICE_STAFF").length;
+
+    // Return loading spinner if needed
     if (shouldRedirect || isUserLoading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <Loader className="h-8 w-8 animate-spin text-primary" />
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     return (
         <div className="flex flex-col p-6 gap-6 max-w-6xl mx-auto w-full">
+            {/* Header */}
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold">Client Dashboard</h1>
+                    <h1 className="text-2xl font-bold">Care Management Dashboard</h1>
                     {authUser?.userInfo && (
-                        <>
-                            <p className="text-muted-foreground">
-                                Welcome, {authUser.cognitoInfo.username} ({authUser.userInfo.email})
-                            </p>
-
-                        </>
-
+                        <p className="text-muted-foreground">
+                            Welcome, {authUser.cognitoInfo.username} ({authUser.userInfo.email})
+                        </p>
                     )}
                 </div>
                 <div className="flex gap-2 relative">
-
                     <Button
-                        size={"icon"}
-                        variant={"secondary"}
+                        size="icon"
+                        variant="secondary"
                         onClick={() => setIsNotificationsOpen(true)}
                     >
-                        <Bell className="h-4 w-4 " />
+                        <Bell className="h-4 w-4" />
                         {invitations.length > 0 && (
                             <span className="absolute left-6 -top-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                                 {invitations.length}
@@ -225,211 +214,143 @@ const DashboardPage = () => {
                 </div>
             </div>
 
+            {/* Role Info */}
             <div>
-                <p className="text-md text-muted-foreground ">
+                <p className="text-md text-muted-foreground">
                     {authUser?.userInfo?.role === "SOFTWARE_OWNER"
-                        ? "SOFTWARE OWNER: You own the place and can invite clients"
+                        ? "SOFTWARE OWNER: You own the place and can invite users"
                         : `You are a ${authUser?.userInfo?.role} and you were invited by ID ${authUser?.userInfo?.invitedById}`}
                 </p>
             </div>
 
-            <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold">Clients</h2>
-                <Button onClick={() => setIsAddClientOpen(true)}>
-                    <Plus className="mr-2 h-4 w-4" /> Add Client
-                </Button>
-            </div>
+            {/* Tabbed Interface */}
+            <Tabs defaultValue="clients" className="w-full" onValueChange={(value) => {
+                setActiveUserType(value === "clients" ? "CLIENT" : value === "careworkers" ? "CARE_WORKER" : "OFFICE_STAFF");
+            }}>
+                <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="clients">
+                        Clients ({clientCount})
+                    </TabsTrigger>
+                    <TabsTrigger value="careworkers">
+                        Care Workers ({careWorkerCount})
+                    </TabsTrigger>
+                    <TabsTrigger value="officestaff">
+                        Office Staff ({officeStaffCount})
+                    </TabsTrigger>
+                </TabsList>
 
-            <div className="rounded-md border">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Date Added</TableHead>
-                            <TableHead className="w-[70px]">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {isClientsLoading ? (
-                            <TableRow>
-                                <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                                    <div className="flex justify-center items-center">
-                                        <Loader className="h-5 w-5 animate-spin mr-2" />
-                                        Loading clients...
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ) : clients.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={5} className="text-center py-6 text-muted-foreground">
-                                    No clients yet. Add your first client to get started.
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            clients.map((client: any) => (
-                                <TableRow key={client.id}>
-                                    <TableCell>{client.name || "USER"} {client.role === "CLIENT" && <span className="text-xs text-muted-foreground">({client.role})</span>}</TableCell>
-                                    <TableCell>{client.email}</TableCell>
-                                    <TableCell>
-                                        <span className={`px-2 py-1 rounded-full font-semibold text-xs ${client.status === "Active"
-                                            ? "bg-green-100 text-green-800"
-                                            : "bg-blue-100 text-blue-800"
-                                            }`}>
-                                            {client.status}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell>{new Date(client.createdAt).toLocaleDateString()}</TableCell>
-                                    <TableCell>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                                    <span className="sr-only">Open menu</span>
-                                                    <MoreHorizontal className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
-                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                <DropdownMenuItem onClick={() => handleSendInvite(client)}>
-                                                    {isCreatingInvitation ? (
-                                                        <>
-                                                            <Loader className="h-3 w-3 animate-spin mr-2" />
-                                                            Sending...
-                                                        </>
-                                                    ) : "Resend Invite"}
-                                                </DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem>View Details</DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => handleCancelInvitation(client)}>
-                                                    {isCancellingInvitation ? (
-                                                        <>
-                                                            <Loader className="h-3 w-3 animate-spin mr-2" />
-                                                            Cancelling...
-                                                        </>
-                                                    ) : "Cancel Invitation"}
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
-
-            <Dialog open={isAddClientOpen} onOpenChange={setIsAddClientOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Add New Client</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="email" className="text-right">
-                                Email
-                            </Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                value={newClientEmail}
-                                onChange={(e) => setNewClientEmail(e.target.value)}
-                                className="col-span-3"
-                                placeholder="client@example.com"
+                {/* Clients Tab */}
+                <TabsContent value="clients">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle>Clients</CardTitle>
+                                <CardDescription>
+                                    Manage your client relationships and invitations
+                                </CardDescription>
+                            </div>
+                            <Button onClick={() => {
+                                setActiveUserType("CLIENT");
+                                setIsAddUserOpen(true);
+                            }}>
+                                <Plus className="mr-2 h-4 w-4" /> Add Client
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <UsersTable
+                                users={allUsers}
+                                isLoading={isUsersLoading}
+                                onSendInvite={handleSendInvite}
+                                onCancelInvitation={handleCancelInvitation}
+                                isCreatingInvitation={isCreatingInvitation}
+                                isCancellingInvitation={isCancellingInvitation}
+                                userType="CLIENT"
                             />
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsAddClientOpen(false)}>
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={handleAddClient}
-                            disabled={!newClientEmail || isLoading}
-                        >
-                            {isCreatingInvitation ? (
-                                <>
-                                    <Loader className="h-4 w-4 animate-spin mr-2" />
-                                    Sending...
-                                </>
-                            ) : "Send Invite"}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
 
-            <Dialog open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
-                <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                        <DialogTitle>Notifications</DialogTitle>
-                    </DialogHeader>
-                    <div className="py-4 max-h-[60vh] overflow-y-auto">
-                        {isInvitationsLoading ? (
-                            <div className="flex justify-center items-center py-6">
-                                <Loader className="h-5 w-5 animate-spin mr-2" />
-                                <p className="text-muted-foreground">Loading notifications...</p>
+                {/* Care Workers Tab */}
+                <TabsContent value="careworkers">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle>Care Workers</CardTitle>
+                                <CardDescription>
+                                    Manage your care team members and invitations
+                                </CardDescription>
                             </div>
-                        ) : invitations.length === 0 ? (
-                            <p className="text-center text-muted-foreground">You have no new notifications.</p>
-                        ) : (
-                            <div className="space-y-4">
-                                {invitations.map((invitation: any) => (
-                                    <div key={invitation.id} className="border rounded-lg p-4 shadow-sm">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div>
-                                                <h3 className="font-medium text-sm">Invitation from {invitation.inviter?.firstName || invitation.inviter?.email}</h3>
-                                                <p className="text-xs text-muted-foreground">
-                                                    {new Date(invitation.createdAt).toLocaleDateString()}
-                                                </p>
-                                            </div>
-                                            <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
-                                                {invitation.status}
-                                            </span>
-                                        </div>
-                                        <p className="text-sm mb-3">
-                                            You have been invited to join the AI Care Manager as a {invitation.role}.
-                                        </p>
-                                        <p className="text-xs text-muted-foreground mb-4">
-                                            Expires on {new Date(invitation.expiresAt).toLocaleDateString()}
-                                        </p>
-                                        <div className="flex justify-end gap-2">
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => handleRejectInvitation(invitation.id)}
-                                                className="flex items-center"
-                                            >
-                                                <X className="h-4 w-4 mr-1" /> Decline
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                onClick={() => handleAcceptInvitation(invitation.id)}
-                                                className="flex items-center"
-                                                disabled={isAcceptingInvitation}
-                                            >
-                                                {isAcceptingInvitation ? (
-                                                    <>
-                                                        <Loader className="h-4 w-4 animate-spin mr-1" /> Processing...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Check className="h-4 w-4 mr-1" /> Accept
-                                                    </>
-                                                )}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ))}
+                            <Button onClick={() => {
+                                setActiveUserType("CARE_WORKER");
+                                setIsAddUserOpen(true);
+                            }}>
+                                <Plus className="mr-2 h-4 w-4" /> Add Care Worker
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <UsersTable
+                                users={allUsers}
+                                isLoading={isUsersLoading}
+                                onSendInvite={handleSendInvite}
+                                onCancelInvitation={handleCancelInvitation}
+                                isCreatingInvitation={isCreatingInvitation}
+                                isCancellingInvitation={isCancellingInvitation}
+                                userType="CARE_WORKER"
+                            />
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                {/* Office Staff Tab */}
+                <TabsContent value="officestaff">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <div>
+                                <CardTitle>Office Staff</CardTitle>
+                                <CardDescription>
+                                    Manage your administrative team members and invitations
+                                </CardDescription>
                             </div>
-                        )}
-                    </div>
-                    <DialogFooter>
-                        <Button onClick={() => setIsNotificationsOpen(false)}>
-                            Close
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+                            <Button onClick={() => {
+                                setActiveUserType("OFFICE_STAFF");
+                                setIsAddUserOpen(true);
+                            }}>
+                                <Plus className="mr-2 h-4 w-4" /> Add Office Staff
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="p-0">
+                            <UsersTable
+                                users={allUsers}
+                                isLoading={isUsersLoading}
+                                onSendInvite={handleSendInvite}
+                                onCancelInvitation={handleCancelInvitation}
+                                isCreatingInvitation={isCreatingInvitation}
+                                isCancellingInvitation={isCancellingInvitation}
+                                userType="OFFICE_STAFF"
+                            />
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+            </Tabs>
+
+            {/* Dialogs */}
+            <AddUserDialog
+                isOpen={isAddUserOpen}
+                setIsOpen={setIsAddUserOpen}
+                onAddUser={handleAddUser}
+                isLoading={isCreatingInvitation}
+                userType={activeUserType}
+            />
+
+            <NotificationsDialog
+                isOpen={isNotificationsOpen}
+                setIsOpen={setIsNotificationsOpen}
+                invitations={invitations}
+                isLoading={isInvitationsLoading}
+                onAccept={handleAcceptInvitation}
+                onReject={handleRejectInvitation}
+                isAcceptingInvitation={isAcceptingInvitation}
+            />
         </div>
     );
 };
